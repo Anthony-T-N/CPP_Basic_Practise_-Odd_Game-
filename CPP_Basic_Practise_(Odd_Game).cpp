@@ -5,15 +5,41 @@
 
 void board_generation(int size)
 {
-    for (int i = 0; i <= size; i++)
+    for (int i = 0; i <= size - 1; i++)
     {
-        std::cout << "[ ]" << "\n";
+        std::cout << "[ ]";
     }
+    std::cout << "\n";
+    for (int i = 0; i <= size - 1; i++)
+    {
+        std::cout << "[ ]";
+    }
+    std::cout << "\n";
+    for (int i = 0; i <= size - 1; i++)
+    {
+        std::cout << "[ ]";
+    }
+    std::cout << "\n";
+    for (int i = 0; i <= size - 1; i++)
+    {
+        std::cout << "[ ]";
+    }
+    std::cout << "\n";
+    for (int i = 0; i <= size - 1; i++)
+    {
+        std::cout << "[ ]";
+    }
+    std::cout << "\n";
+    for (int i = 0; i <= size - 1; i++)
+    {
+        std::cout << "[ ]";
+    }
+    std::cout << "\n";
 }
 
 int main()
 {
     std::cout << "Welcome friend!" << "\n\n";
-    board_generation(5);
+    board_generation(10);
     return 0;
 }
