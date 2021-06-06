@@ -30,7 +30,7 @@ void board_generation(int &size)
         }
         main_board.push_back(board_sector);
     }
-    // Print board.
+    // Prints out board.
     for (int i = 0; i < main_board.size(); i++)
     {
         for (int j = 0; j < main_board[i].size(); j++)
@@ -43,6 +43,7 @@ void board_generation(int &size)
 
 void item_positioning(int size)
 {
+    // https://stackoverflow.com/questions/4919303/c-random-number-generation
     // Generate number between 0 and size.
     int random_pos_one = rand() % (size);
     int random_pos_two = rand() % (size);
@@ -58,7 +59,7 @@ void item_positioning(int size)
     }
 }
 
-void player_control(std::string& user_input)
+int player_control(std::string& user_input)
 {
     // Move left.
     if (user_input == "w")
@@ -68,6 +69,7 @@ void player_control(std::string& user_input)
         // Move main character on board up by one.
         position_one -= 1;
         main_board[position_one][position_two] = "[@]";
+        return 0;
     }
     // Move down.
     else if (user_input == "s")
@@ -77,6 +79,7 @@ void player_control(std::string& user_input)
         // Move main character on board down by one.
         position_one += 1;
         main_board[position_one][position_two] = "[@]";
+        return 0;
     }
     // Move right.
     else if (user_input == "d")
@@ -86,6 +89,7 @@ void player_control(std::string& user_input)
         // Move main character on board down by one.
         position_two += 1;
         main_board[position_one][position_two] = "[@]";
+        return 0;
     }
     // Move up.
     else if (user_input == "a")
@@ -95,23 +99,27 @@ void player_control(std::string& user_input)
         // Move main character on board down by one.
         position_two -= 1;
         main_board[position_one][position_two] = "[@]";
+        return 0;
     }
     else if (user_input == "exit")
     {
-        return;
+        std::cout << "User wants to exit;" << "\n";
+        return 1;
     }
     else
     {
         std::cout << "[-] Invalid User Input;" << "\n";
+        return 0;
     }
-
 }
 
 int main()
 {
     // Never trust user input.
     std::cout << "Welcome friend!" << "\n\n";
+    std::cout << "Board size: ";
     int board_size;
+    // Ensure user input is always a number.
     std::cin >> board_size;
     board_generation(board_size);
     std::cout << "\n\n";
@@ -127,8 +135,30 @@ int main()
     std::string user_input;
     while (true)
     {
+        std::cout << "User input: ";
         std::cin >> user_input;
-        player_control(user_input);
+        // player_control function returns either 1 or 0 and stores in variable temp.
+        int temp = player_control(user_input);
+        std::cout << "Temp returned as: " << temp << "\n";
+        int temptwo = 20;
+        if (temp == 0)
+        {
+            std::cout << "Temp is 0" << "\n";
+        }
+        if (temp == 1);
+        {
+            std::cout << "Temp is 1" << "\n";
+        }
+        if (temptwo == temp)
+        {
+            std::cout << "Temp = 20" << "\n";
+        }
+        if (temp == 5000);
+        {
+            std::cout << "Temp is 5000" << "\n";
+        }
+        std::cout << "END" << "\n";
+
         for (int i = 0; i < main_board.size(); i++)
         {
             for (int j = 0; j < main_board[i].size(); j++)
@@ -138,5 +168,7 @@ int main()
             std::cout << "\n";
         }
     }
+    std::cout << "[!] END" << "\n";
+    std::cout << "[!] Exiting..." << "\n\n";
     return 0;
 }
