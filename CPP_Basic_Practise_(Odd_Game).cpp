@@ -8,6 +8,19 @@ std::vector<std::vector<std::string>> main_board;
 // Current position of player.
 int position_one, position_two;
 
+void board_display()
+{
+    // Prints out board.
+    for (int i = 0; i < main_board.size(); i++)
+    {
+        for (int j = 0; j < main_board[i].size(); j++)
+        {
+            std::cout << main_board[i][j];
+        }
+        std::cout << "\n";
+    }
+}
+
 void board_generation(int &size)
 {
     std::vector<std::string> board_sector;
@@ -30,15 +43,8 @@ void board_generation(int &size)
         }
         main_board.push_back(board_sector);
     }
-    // Prints out board.
-    for (int i = 0; i < main_board.size(); i++)
-    {
-        for (int j = 0; j < main_board[i].size(); j++)
-        {
-            std::cout << main_board[i][j];
-        }
-        std::cout << "\n";
-    }
+    board_display();
+    
 }
 
 void item_positioning(int size)
@@ -124,49 +130,18 @@ int main()
     board_generation(board_size);
     std::cout << "\n\n";
     item_positioning(board_size);
-    for (int i = 0; i < main_board.size(); i++)
-    {
-        for (int j = 0; j < main_board[i].size(); j++)
-        {
-            std::cout << main_board[i][j];
-        }
-        std::cout << "\n";
-    }
+    board_display();
     std::string user_input;
     while (true)
     {
         std::cout << "User input: ";
         std::cin >> user_input;
-        // player_control function returns either 1 or 0 and stores in variable temp.
-        int temp = player_control(user_input);
-        std::cout << "Temp returned as: " << temp << "\n";
-        int temptwo = 20;
-        if (temp == 0)
+        //int temp = player_control(user_input);
+        if (player_control(user_input) == 1)
         {
-            std::cout << "Temp is 0" << "\n";
+            break;
         }
-        if (temp == 1);
-        {
-            std::cout << "Temp is 1" << "\n";
-        }
-        if (temptwo == temp)
-        {
-            std::cout << "Temp = 20" << "\n";
-        }
-        if (temp == 5000);
-        {
-            std::cout << "Temp is 5000" << "\n";
-        }
-        std::cout << "END" << "\n";
-
-        for (int i = 0; i < main_board.size(); i++)
-        {
-            for (int j = 0; j < main_board[i].size(); j++)
-            {
-                std::cout << main_board[i][j];
-            }
-            std::cout << "\n";
-        }
+        board_display();
     }
     std::cout << "[!] END" << "\n";
     std::cout << "[!] Exiting..." << "\n\n";
