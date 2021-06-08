@@ -7,6 +7,8 @@
 std::vector<std::vector<std::string>> main_board;
 // Current position of player.
 int position_one, position_two;
+// Current position of V.
+int tracker_position_one, tracker_position_two;
 
 void board_display()
 {
@@ -57,11 +59,30 @@ void item_positioning(int size)
     main_board[random_pos_one][random_pos_two] = "[@]";
     position_one = random_pos_one;
     position_two = random_pos_two;
+    random_pos_one = rand() % (size);
+    random_pos_two = rand() % (size);
+    main_board[random_pos_one][random_pos_two] = "[V]";
+    tracker_position_one = random_pos_one;
+    tracker_position_two = random_pos_two;
     for (int i = 0; i <= 5; i++)
     {
         main_board[rand() % (size)][rand() % (size)] = "[#]";
         main_board[rand() % (size)][rand() % (size)] = "[!]";
         main_board[rand() % (size)][rand() % (size)] = "[%]";
+    }
+}
+
+void tracker()
+{
+    if (tracker_position_one > position_one && tracker_position_two > position_two)
+    {
+        std::cout << "Tracker moving" << "\n";
+        // Remove main character from current position.
+        main_board[tracker_position_one][tracker_position_two] = "[ ]";
+        // Move main character on board up by one.
+        tracker_position_one -= 1;
+        tracker_position_two -= 1;
+        main_board[tracker_position_one][tracker_position_two] = "[V]";
     }
 }
 
@@ -141,6 +162,9 @@ int main()
         {
             break;
         }
+        tracker();
+        std::cout << "Main character: " << position_one + "|" << position_two << "\n";
+        std::cout << "Tracker: " << tracker_position_one + "|" << tracker_position_two << "\n";
         board_display();
     }
     std::cout << "[!] END" << "\n";
