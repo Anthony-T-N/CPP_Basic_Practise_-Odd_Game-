@@ -74,14 +74,46 @@ void item_positioning(int size)
 
 void tracker()
 {
+    // Top Left
     if (tracker_position_one > position_one && tracker_position_two > position_two)
     {
         std::cout << "Tracker moving" << "\n";
-        // Remove main character from current position.
         main_board[tracker_position_one][tracker_position_two] = "[ ]";
-        // Move main character on board up by one.
         tracker_position_one -= 1;
         tracker_position_two -= 1;
+        main_board[tracker_position_one][tracker_position_two] = "[V]";
+    }
+    // Top right
+    else if (tracker_position_one > position_one && tracker_position_two < position_two)
+    {
+        std::cout << "Tracker moving" << "\n";
+        main_board[tracker_position_one][tracker_position_two] = "[ ]";
+        tracker_position_one -= 1;
+        tracker_position_two += 1;
+        main_board[tracker_position_one][tracker_position_two] = "[V]";
+    }
+    // Right
+    else if (tracker_position_one == position_one && tracker_position_two < position_two)
+    {
+        std::cout << "Tracker moving" << "\n";
+        main_board[tracker_position_one][tracker_position_two] = "[ ]";
+        tracker_position_two += 1;
+        main_board[tracker_position_one][tracker_position_two] = "[V]";
+    }
+    // Left
+    else if (tracker_position_one == position_one && tracker_position_two > position_two)
+    {
+        std::cout << "Tracker moving" << "\n";
+        main_board[tracker_position_one][tracker_position_two] = "[ ]";
+        tracker_position_two -= 1;
+        main_board[tracker_position_one][tracker_position_two] = "[V]";
+    }
+    // Down
+    else if (tracker_position_one < position_one && tracker_position_two == position_two)
+    {
+        std::cout << "Tracker moving" << "\n";
+        main_board[tracker_position_one][tracker_position_two] = "[ ]";
+        tracker_position_one += 1;
         main_board[tracker_position_one][tracker_position_two] = "[V]";
     }
 }
@@ -163,8 +195,8 @@ int main()
             break;
         }
         tracker();
-        std::cout << "Main character: " << position_one + "|" << position_two << "\n";
-        std::cout << "Tracker: " << tracker_position_one + "|" << tracker_position_two << "\n";
+        std::cout << "Main character: " << position_one << "|" << position_two << "\n";
+        std::cout << "Tracker: " << tracker_position_one << "|" << tracker_position_two << "\n";
         board_display();
     }
     std::cout << "[!] END" << "\n";
