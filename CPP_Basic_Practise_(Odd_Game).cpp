@@ -87,9 +87,17 @@ void tracker()
     else if (tracker_position_one > position_one && tracker_position_two < position_two)
     {
         std::cout << "Tracker moving" << "\n";
+        int random_pos_one = rand() % (2);
+        std::cout << random_pos_one << "\n";
         main_board[tracker_position_one][tracker_position_two] = "[ ]";
-        tracker_position_one -= 1;
-        tracker_position_two += 1;
+        if (random_pos_one == 0)
+        {
+            tracker_position_one -= 1;
+        }
+        else
+        {
+            tracker_position_two += 1;
+        }
         main_board[tracker_position_one][tracker_position_two] = "[V]";
     }
     // Right
@@ -114,6 +122,14 @@ void tracker()
         std::cout << "Tracker moving" << "\n";
         main_board[tracker_position_one][tracker_position_two] = "[ ]";
         tracker_position_one += 1;
+        main_board[tracker_position_one][tracker_position_two] = "[V]";
+    }
+    // Up
+    else if (tracker_position_one > position_one && tracker_position_two == position_two)
+    {
+        std::cout << "Tracker moving" << "\n";
+        main_board[tracker_position_one][tracker_position_two] = "[ ]";
+        tracker_position_one -= 1;
         main_board[tracker_position_one][tracker_position_two] = "[V]";
     }
 }
