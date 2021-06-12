@@ -1,6 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <filesystem>
+
+#include <Windows.h>
+#pragma comment(lib, "Winmm.lib")
+#include <mmsystem.h>
+void test()
+{
+    PlaySound(TEXT("E2T4.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+}
 
 // std::vector == Dynamic array (Similar to C# lists)
 // 2D Vectory array.
@@ -53,23 +62,19 @@ void item_positioning(int size)
 {
     // https://stackoverflow.com/questions/4919303/c-random-number-generation
     // Generate number between 0 and size.
-    int random_pos_one = rand() % (size);
-    int random_pos_two = rand() % (size);
-    std::cout << random_pos_one << "|" << random_pos_two << "\n\n";
-    main_board[random_pos_one][random_pos_two] = "[@]";
-    position_one = random_pos_one;
-    position_two = random_pos_two;
-    random_pos_one = rand() % (size);
-    random_pos_two = rand() % (size);
-    main_board[random_pos_one][random_pos_two] = "[V]";
-    tracker_position_one = random_pos_one;
-    tracker_position_two = random_pos_two;
     for (int i = 0; i <= 5; i++)
     {
         main_board[rand() % (size)][rand() % (size)] = "[#]";
         main_board[rand() % (size)][rand() % (size)] = "[!]";
         main_board[rand() % (size)][rand() % (size)] = "[%]";
     }
+    position_one = rand() % (size);
+    position_two = rand() % (size);
+    std::cout << position_one << "|" << position_two << "\n\n";
+    main_board[position_one][position_two] = "[@]";
+    tracker_position_one = rand() % (size);
+    tracker_position_two = rand() % (size);
+    main_board[tracker_position_one][tracker_position_two] = "[V]";
 }
 
 void tracker()
@@ -151,45 +156,31 @@ void tracker()
 
 int player_control(std::string& user_input)
 {
+    // Remove main character from current position.
+    main_board[position_one][position_two] = "[ ]";
     // Move left.
     if (user_input == "w")
     {
-        // Remove main character from current position.
-        main_board[position_one][position_two] = "[ ]";
         // Move main character on board up by one.
         position_one -= 1;
-        main_board[position_one][position_two] = "[@]";
-        return 0;
     }
     // Move down.
     else if (user_input == "s")
     {
-        // Remove main character from current position.
-        main_board[position_one][position_two] = "[ ]";
         // Move main character on board down by one.
         position_one += 1;
-        main_board[position_one][position_two] = "[@]";
-        return 0;
     }
     // Move right.
     else if (user_input == "d")
     {
-        // Remove main character from current position.
-        main_board[position_one][position_two] = "[ ]";
         // Move main character on board down by one.
         position_two += 1;
-        main_board[position_one][position_two] = "[@]";
-        return 0;
     }
     // Move up.
     else if (user_input == "a")
     {
-        // Remove main character from current position.
-        main_board[position_one][position_two] = "[ ]";
         // Move main character on board down by one.
         position_two -= 1;
-        main_board[position_one][position_two] = "[@]";
-        return 0;
     }
     else if (user_input == "exit")
     {
@@ -199,28 +190,39 @@ int player_control(std::string& user_input)
     else
     {
         std::cout << "[-] Invalid User Input;" << "\n";
+        main_board[position_one][position_two] = "[@]";
         return 0;
     }
+    main_board[position_one][position_two] = "[@]";
+    return 0;
 }
 
 int main()
 {
+    test();
+    std::cout << "=======================================" << "\n";
+    std::cout << "- CPP_Basic_Practise_(Odd_Game) console application" << "\n";
+    std::cout << "- Console Application Version: 1.0" << "\n";
+    std::cout << "- Created By: Anthony N." << "\n";
+    // https://en.cppreference.com/w/cpp/filesystem/current_path
+    std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
+    std::cout << "=======================================" << "\n\n";
     // Never trust user input.
     std::cout << "Welcome friend!" << "\n\n";
-    std::cout << "Board size: ";
+    std::cout << "WASD to move" << "\n";
+    std::cout << "Please enter board size: ";
     int board_size;
-    // Ensure user input is always a number.
+    //TODO: Ensure user input is always a number.
     std::cin >> board_size;
     board_generation(board_size);
     std::cout << "\n\n";
     item_positioning(board_size);
     board_display();
-    std::string user_input;
     while (true)
     {
+        std::string user_input;
         std::cout << "User input: ";
         std::cin >> user_input;
-        //int temp = player_control(user_input);
         if (player_control(user_input) == 1)
         {
             break;
