@@ -3,14 +3,6 @@
 #include <sstream>
 #include <filesystem>
 
-#include <Windows.h>
-#pragma comment(lib, "Winmm.lib")
-#include <mmsystem.h>
-void test()
-{
-    PlaySound(TEXT("E2T4.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-}
-
 // std::vector == Dynamic array (Similar to C# lists)
 // 2D Vectory array.
 std::vector<std::vector<std::string>> main_board;
@@ -197,9 +189,33 @@ int player_control(std::string& user_input)
     return 0;
 }
 
+// =====================================================================================
+// Experimental
+#include <Windows.h>
+#pragma comment(lib, "Winmm.lib")
+//#include <mmsystem.h>
+void test()
+{
+    // https://stackoverflow.com/questions/28656004/c-random-doesnt-workreturns-same-value-always
+    srand(time(NULL));
+    std::string play_track = "";
+    std::cout << rand() % 2 << "\n";
+    if (0 == rand() % 2)
+    {
+        play_track = "Mixdown.wav";
+        PlaySound(TEXT("Mixdown.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+    }
+    else
+    {
+        play_track = "E2T4.wav";
+        PlaySound(TEXT("E2T4.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+    }
+    std::cout << "Playing Track: " << play_track << "\n";
+}
+// =====================================================================================
+
 int main()
 {
-    test();
     std::cout << "=======================================" << "\n";
     std::cout << "- CPP_Basic_Practise_(Odd_Game) console application" << "\n";
     std::cout << "- Console Application Version: 1.0" << "\n";
@@ -208,8 +224,11 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
+    test();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "WASD to move" << "\n";
+    std::cout << "[@] <= Your character" << "\n";
+    std::cout << "[V] <= Tracker" << "\n";
     std::cout << "Please enter board size: ";
     int board_size;
     //TODO: Ensure user input is always a number.
