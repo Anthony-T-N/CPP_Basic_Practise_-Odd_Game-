@@ -7,7 +7,7 @@
 // 2D Vectory array.
 std::vector<std::vector<std::string>> main_board;
 // Current position of player.
-int position_one, position_two;
+int main_position_one, main_position_two;
 // Current position of V.
 int tracker_position_one, tracker_position_two;
 
@@ -42,7 +42,7 @@ void board_generation(int &size)
         // board_sector.push_back("[" + std::to_string(i + 1) + "]");
         for (int j = 0; j < size; j++)
         {
-            board_sector.push_back("[ ]");
+            board_sector.push_back(" . ");
         }
         main_board.push_back(board_sector);
     }
@@ -60,23 +60,33 @@ void item_positioning(int size)
         main_board[rand() % (size)][rand() % (size)] = "[!]";
         main_board[rand() % (size)][rand() % (size)] = "[%]";
     }
-    position_one = rand() % (size);
-    position_two = rand() % (size);
-    std::cout << position_one << "|" << position_two << "\n\n";
-    main_board[position_one][position_two] = "[@]";
+    main_position_one = rand() % (size);
+    main_position_two = rand() % (size);
+    std::cout << main_position_one << "|" << main_position_two << "\n\n";
+    main_board[main_position_one][main_position_two] = "[@]";
     tracker_position_one = rand() % (size);
     tracker_position_two = rand() % (size);
-    main_board[tracker_position_one][tracker_position_two] = "[V]";
+    // Test. Remove below.
+    std::cin >> tracker_position_one;
+    std::cin >> tracker_position_two;
+    // Detect if tracker spawns at the same position of main character.
+    while (main_position_one == tracker_position_one && main_position_two == tracker_position_two)
+    {
+        std::cout << "[-] Tracker spawn conflict detected;" << "\n";
+        tracker_position_one = rand() % (size);
+        tracker_position_two = rand() % (size);
+    }
+    main_board[tracker_position_one][tracker_position_two] = "[T]";
 }
 
 void tracker()
 {
     std::cout << "Tracker moving" << "\n";
-    main_board[tracker_position_one][tracker_position_two] = "[ ]";
+    main_board[tracker_position_one][tracker_position_two] = " . ";
     int random_pos_one = rand() % (2);
     std::cout << random_pos_one << "\n";
     // Top Left
-    if (tracker_position_one > position_one && tracker_position_two > position_two)
+    if (tracker_position_one > main_position_one && tracker_position_two > main_position_two)
     {
         if (random_pos_one == 0)
         {
@@ -88,7 +98,7 @@ void tracker()
         }
     }
     // Top right
-    else if (tracker_position_one > position_one && tracker_position_two < position_two)
+    else if (tracker_position_one > main_position_one && tracker_position_two < main_position_two)
     {
         if (random_pos_one == 0)
         {
@@ -100,7 +110,7 @@ void tracker()
         }
     }
     // Bottom Left
-    else if (tracker_position_one < position_one && tracker_position_two > position_two)
+    else if (tracker_position_one < main_position_one && tracker_position_two > main_position_two)
     {
         if (random_pos_one == 0)
         {
@@ -112,7 +122,7 @@ void tracker()
         }
     }
     // Bottom Right
-    else if (tracker_position_one < position_one && tracker_position_two < position_two)
+    else if (tracker_position_one < main_position_one && tracker_position_two < main_position_two)
     {
         if (random_pos_one == 0)
         {
@@ -124,55 +134,55 @@ void tracker()
         }
     }
     // Right
-    else if (tracker_position_one == position_one && tracker_position_two < position_two)
+    else if (tracker_position_one == main_position_one && tracker_position_two < main_position_two)
     {
         tracker_position_two += 1;
     }
     // Left
-    else if (tracker_position_one == position_one && tracker_position_two > position_two)
+    else if (tracker_position_one == main_position_one && tracker_position_two > main_position_two)
     {
         tracker_position_two -= 1;
     }
     // Down
-    else if (tracker_position_one < position_one && tracker_position_two == position_two)
+    else if (tracker_position_one < main_position_one && tracker_position_two == main_position_two)
     {
         tracker_position_one += 1;
     }
     // Up
-    else if (tracker_position_one > position_one && tracker_position_two == position_two)
+    else if (tracker_position_one > main_position_one && tracker_position_two == main_position_two)
     {
         tracker_position_one -= 1;
     }
-    main_board[tracker_position_one][tracker_position_two] = "[V]";
+    main_board[tracker_position_one][tracker_position_two] = "[T]";
 }
 
 int player_control(std::string& user_input)
 {
     // Remove main character from current position.
-    main_board[position_one][position_two] = "[ ]";
+    main_board[main_position_one][main_position_two] = " . ";
     // Move left.
     if (user_input == "w")
     {
         // Move main character on board up by one.
-        position_one -= 1;
+        main_position_one -= 1;
     }
     // Move down.
     else if (user_input == "s")
     {
         // Move main character on board down by one.
-        position_one += 1;
+        main_position_one += 1;
     }
     // Move right.
     else if (user_input == "d")
     {
         // Move main character on board down by one.
-        position_two += 1;
+        main_position_two += 1;
     }
     // Move up.
     else if (user_input == "a")
     {
         // Move main character on board down by one.
-        position_two -= 1;
+        main_position_two -= 1;
     }
     else if (user_input == "exit")
     {
@@ -182,10 +192,10 @@ int player_control(std::string& user_input)
     else
     {
         std::cout << "[-] Invalid User Input;" << "\n";
-        main_board[position_one][position_two] = "[@]";
+        main_board[main_position_one][main_position_two] = "[@]";
         return 0;
     }
-    main_board[position_one][position_two] = "[@]";
+    main_board[main_position_one][main_position_two] = "[@]";
     return 0;
 }
 
@@ -199,7 +209,6 @@ void test()
     // https://stackoverflow.com/questions/28656004/c-random-doesnt-workreturns-same-value-always
     srand(time(NULL));
     std::string play_track = "";
-    std::cout << rand() % 2 << "\n";
     if (0 == rand() % 2)
     {
         play_track = "Mixdown.wav";
@@ -224,11 +233,12 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    test();
+    //test();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "WASD to move" << "\n";
     std::cout << "[@] <= Your character" << "\n";
-    std::cout << "[V] <= Tracker" << "\n";
+    std::cout << "[T] <= Tracker" << "\n";
+    std::cout << "Type 'Exit' to end application" << "\n\n";
     std::cout << "Please enter board size: ";
     int board_size;
     //TODO: Ensure user input is always a number.
@@ -247,7 +257,7 @@ int main()
             break;
         }
         tracker();
-        std::cout << "Main character: " << position_one << "|" << position_two << "\n";
+        std::cout << "Main character: " << main_position_one << "|" << main_position_two << "\n";
         std::cout << "Tracker: " << tracker_position_one << "|" << tracker_position_two << "\n";
         board_display();
     }
