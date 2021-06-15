@@ -66,9 +66,6 @@ void item_positioning(int size)
     main_board[main_position_one][main_position_two] = "[@]";
     tracker_position_one = rand() % (size);
     tracker_position_two = rand() % (size);
-    // Test. Remove below.
-    std::cin >> tracker_position_one;
-    std::cin >> tracker_position_two;
     // Detect if tracker spawns at the same position of main character.
     while (main_position_one == tracker_position_one && main_position_two == tracker_position_two)
     {
@@ -175,6 +172,10 @@ int player_control(std::string& user_input)
     // Move right.
     else if (user_input == "d")
     {
+        if (main_position_one += 1 >= main_board.size())
+        {
+            std::cout << "Error";
+        }
         // Move main character on board down by one.
         main_position_two += 1;
     }
