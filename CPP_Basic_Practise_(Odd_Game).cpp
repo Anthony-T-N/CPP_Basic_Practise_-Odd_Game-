@@ -172,12 +172,21 @@ int player_control(std::string& user_input)
     // Move right.
     else if (user_input == "d")
     {
-        if (main_position_one += 1 >= main_board.size())
+        std::cout << "1st Mark: " << main_position_two << "\n";
+        //std::cout << (main_position_two += 1) << "\n";
+        std::cout << "Size: " << main_board.size() << "\n";
+        int delta = main_position_two += 1;
+        std::cout << "1.2 Mark: " << main_position_two << "\n";
+        if ((delta) >= (main_board.size() + 1))
         {
-            std::cout << "Error";
+            std::cout << "Error" << "\n";
         }
-        // Move main character on board down by one.
-        main_position_two += 1;
+        else
+        {
+            std::cout << "2nd Mark: " << main_position_two << "\n";
+            // Move main character on board down by one.
+            main_position_two += 1;
+        }
     }
     // Move up.
     else if (user_input == "a")
