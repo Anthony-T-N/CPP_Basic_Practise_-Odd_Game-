@@ -160,30 +160,38 @@ int player_control(std::string& user_input)
     // Move left.
     if (user_input == "w")
     {
-        // Move main character on board up by one.
-        main_position_one -= 1;
-    }
-    // Move down.
-    else if (user_input == "s")
-    {
-        // Move main character on board down by one.
-        main_position_one += 1;
-    }
-    // Move right.
-    else if (user_input == "d")
-    {
-        std::cout << "1st Mark: " << main_position_two << "\n";
-        //std::cout << (main_position_two += 1) << "\n";
-        std::cout << "Size: " << main_board.size() << "\n";
-        int delta = main_position_two += 1;
-        std::cout << "1.2 Mark: " << main_position_two << "\n";
-        if ((delta) >= (main_board.size() + 1))
+        if (main_position_one - 1 < 0)
         {
             std::cout << "Error" << "\n";
         }
         else
         {
-            std::cout << "2nd Mark: " << main_position_two << "\n";
+            // Move main character on board up by one.
+            main_position_one -= 1;
+        }
+    }
+    // Move down.
+    else if (user_input == "s")
+    {
+        if (main_position_one + 1 >= (main_board.size()))
+        {
+            std::cout << "Error" << "\n";
+        }
+        else
+        {
+            // Move main character on board down by one.
+            main_position_one += 1;
+        }
+    }
+    // Move right.
+    else if (user_input == "d")
+    {
+        if (main_position_two + 1 >= (main_board.size()))
+        {
+            std::cout << "Error" << "\n";
+        }
+        else
+        {
             // Move main character on board down by one.
             main_position_two += 1;
         }
@@ -191,8 +199,15 @@ int player_control(std::string& user_input)
     // Move up.
     else if (user_input == "a")
     {
-        // Move main character on board down by one.
-        main_position_two -= 1;
+        if (main_position_two - 1 < 0)
+        {
+            std::cout << "Error" << "\n";
+        }
+        else
+        {
+            // Move main character on board down by one.
+            main_position_two -= 1;
+        }
     }
     else if (user_input == "exit")
     {
@@ -214,7 +229,7 @@ int player_control(std::string& user_input)
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 //#include <mmsystem.h>
-void test()
+void sound_track()
 {
     // https://stackoverflow.com/questions/28656004/c-random-doesnt-workreturns-same-value-always
     srand(time(NULL));
@@ -243,7 +258,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    //test();
+    sound_track();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "WASD to move" << "\n";
     std::cout << "[@] <= Your character" << "\n";
