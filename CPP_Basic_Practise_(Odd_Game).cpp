@@ -192,7 +192,7 @@ int player_control(std::string& user_input)
         }
         else
         {
-            // Move main character on board down by one.
+            // Move main character on board right by one.
             main_position_two += 1;
         }
     }
@@ -205,8 +205,19 @@ int player_control(std::string& user_input)
         }
         else
         {
-            // Move main character on board down by one.
+            // Move main character on board left by one.
             main_position_two -= 1;
+        }
+    }
+    else if (user_input == "t")
+    {
+        if (main_position_two - 3 < 0)
+        {
+            std::cout << "Error" << "\n";
+        }
+        else
+        {
+            main_position_two -= 3;
         }
     }
     else if (user_input == "exit")
@@ -229,7 +240,7 @@ int player_control(std::string& user_input)
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 //#include <mmsystem.h>
-void sound_track()
+void soundtrack()
 {
     // https://stackoverflow.com/questions/28656004/c-random-doesnt-workreturns-same-value-always
     srand(time(NULL));
@@ -258,7 +269,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    sound_track();
+    //soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "WASD to move" << "\n";
     std::cout << "[@] <= Your character" << "\n";
@@ -282,8 +293,8 @@ int main()
             break;
         }
         tracker();
-        std::cout << "Main character: " << main_position_one << "|" << main_position_two << "\n";
-        std::cout << "Tracker: " << tracker_position_one << "|" << tracker_position_two << "\n";
+        std::cout << "Main character: " << main_position_one << "|" << main_position_two 
+            << " Tracker: " << tracker_position_one << "|" << tracker_position_two << "\n";
         board_display();
     }
     std::cout << "[!] END" << "\n";
