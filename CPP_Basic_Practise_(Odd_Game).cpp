@@ -157,67 +157,64 @@ int player_control(std::string& user_input)
 {
     // Remove main character from current position.
     main_board[main_position_one][main_position_two] = " . ";
+
+    int movement = 1;
+    if (user_input == "t")
+    {
+        std::cout << "Direction: ";
+        std::cin >> user_input;
+        movement = 3;
+    }
     // Move left.
     if (user_input == "w")
     {
-        if (main_position_one - 1 < 0)
+        if (main_position_one - movement < 0)
         {
-            std::cout << "Error" << "\n";
+            std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board up by one.
-            main_position_one -= 1;
+            main_position_one -= movement;
         }
     }
     // Move down.
     else if (user_input == "s")
     {
-        if (main_position_one + 1 >= (main_board.size()))
+        if (main_position_one + movement >= (main_board.size()))
         {
-            std::cout << "Error" << "\n";
+            std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board down by one.
-            main_position_one += 1;
+            main_position_one += movement;
         }
     }
     // Move right.
     else if (user_input == "d")
     {
-        if (main_position_two + 1 >= (main_board.size()))
+        if (main_position_two + movement >= (main_board.size()))
         {
-            std::cout << "Error" << "\n";
+            std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board right by one.
-            main_position_two += 1;
+            main_position_two += movement;
         }
     }
     // Move up.
     else if (user_input == "a")
     {
-        if (main_position_two - 1 < 0)
+        if (main_position_two - movement < 0)
         {
-            std::cout << "Error" << "\n";
+            std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board left by one.
-            main_position_two -= 1;
-        }
-    }
-    else if (user_input == "t")
-    {
-        if (main_position_two - 3 < 0)
-        {
-            std::cout << "Error" << "\n";
-        }
-        else
-        {
-            main_position_two -= 3;
+            main_position_two -= movement;
         }
     }
     else if (user_input == "exit")
