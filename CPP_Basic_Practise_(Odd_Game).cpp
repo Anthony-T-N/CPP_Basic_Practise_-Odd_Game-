@@ -6,9 +6,9 @@
 // std::vector == Dynamic array (Similar to C# lists)
 // 2D Vectory array.
 std::vector<std::vector<std::string>> main_board;
-// Current position of player.
+// Current position of player. (Main Character / Current Player)
 int main_position_one, main_position_two;
-// Current position of V.
+// Current position of T. (Tracker)
 int tracker_position_one, tracker_position_two;
 
 void board_display()
@@ -74,6 +74,16 @@ void item_positioning(int size)
         tracker_position_two = rand() % (size);
     }
     main_board[tracker_position_one][tracker_position_two] = "[T]";
+}
+
+void deploy_shield(std::string& user_input)
+{
+    if (user_input == "w")
+    {
+        main_board[main_position_one - 1][main_position_two - 1] = " # ";
+        main_board[main_position_one - 1][main_position_two] = " # ";
+        main_board[main_position_one - 1][main_position_two + 1] = " # ";
+    }
 }
 
 void tracker()
@@ -159,11 +169,21 @@ int player_control(std::string& user_input)
     main_board[main_position_one][main_position_two] = " . ";
 
     int movement = 1;
+
+    if (user_input == "z")
+    {
+        std::cout << "Direction: ";
+        std::cin >> user_input;
+        deploy_shield(user_input);
+        main_board[main_position_one][main_position_two] = "[@]";
+        return 0;
+    }
+
     if (user_input == "t")
     {
         std::cout << "Direction: ";
         std::cin >> user_input;
-        movement = 3;
+        movement = 5;
     }
     // Move left.
     if (user_input == "w")
@@ -266,7 +286,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    //soundtrack();
+    soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "WASD to move" << "\n";
     std::cout << "[@] <= Your character" << "\n";
