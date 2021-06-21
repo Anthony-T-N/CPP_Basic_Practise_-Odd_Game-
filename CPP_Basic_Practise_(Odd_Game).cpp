@@ -84,6 +84,24 @@ void deploy_shield(std::string& user_input)
         main_board[main_position_one - 1][main_position_two] = " # ";
         main_board[main_position_one - 1][main_position_two + 1] = " # ";
     }
+    else if (user_input == "s")
+    {
+        main_board[main_position_one + 1][main_position_two - 1] = " # ";
+        main_board[main_position_one + 1][main_position_two] = " # ";
+        main_board[main_position_one + 1][main_position_two + 1] = " # ";
+    }
+    else if (user_input == "d")
+    {
+        main_board[main_position_one - 1][main_position_two + 1] = " # ";
+        main_board[main_position_one][main_position_two + 1] = " # ";
+        main_board[main_position_one + 1][main_position_two + 1] = " # ";
+    }
+    else if (user_input == "a")
+    {
+        main_board[main_position_one - 1][main_position_two - 1] = " # ";
+        main_board[main_position_one][main_position_two - 1] = " # ";
+        main_board[main_position_one + 1][main_position_two - 1] = " # ";
+    }
 }
 
 void tracker()
@@ -288,7 +306,10 @@ int main()
     // Never trust user input.
     soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
+    std::cout << "Controls:" << "\n";
     std::cout << "WASD to move" << "\n";
+    std::cout << "t to teleport" << "\n";
+    std::cout << "z to deploy shield" << "\n";
     std::cout << "[@] <= Your character" << "\n";
     std::cout << "[T] <= Tracker" << "\n";
     std::cout << "Type 'Exit' to end application" << "\n\n";
@@ -313,6 +334,11 @@ int main()
         std::cout << "Main character: " << main_position_one << "|" << main_position_two 
             << " Tracker: " << tracker_position_one << "|" << tracker_position_two << "\n";
         board_display();
+        if (main_position_one == tracker_position_one && main_position_two == tracker_position_two)
+        {
+            std::cout << "[-] GAME OVER;" << "\n";
+            break;
+        }
     }
     std::cout << "[!] END" << "\n";
     std::cout << "[!] Exiting..." << "\n\n";
