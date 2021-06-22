@@ -80,9 +80,16 @@ void deploy_shield(std::string& user_input)
 {
     if (user_input == "w")
     {
-        main_board[main_position_one - 1][main_position_two - 1] = " # ";
-        main_board[main_position_one - 1][main_position_two] = " # ";
-        main_board[main_position_one - 1][main_position_two + 1] = " # ";
+        if (main_position_one - 1 < 0)
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else
+        {
+            main_board[main_position_one - 1][main_position_two - 1] = " # ";
+            main_board[main_position_one - 1][main_position_two] = " # ";
+            main_board[main_position_one - 1][main_position_two + 1] = " # ";
+        }
     }
     else if (user_input == "s")
     {
