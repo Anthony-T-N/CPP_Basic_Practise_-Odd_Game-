@@ -93,21 +93,42 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "s")
     {
-        main_board[main_position_one + 1][main_position_two - 1] = " # ";
-        main_board[main_position_one + 1][main_position_two] = " # ";
-        main_board[main_position_one + 1][main_position_two + 1] = " # ";
+        if (main_position_one + 1 >= main_board.size())
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else
+        {
+            main_board[main_position_one + 1][main_position_two - 1] = " # ";
+            main_board[main_position_one + 1][main_position_two] = " # ";
+            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+        }
     }
     else if (user_input == "d")
     {
-        main_board[main_position_one - 1][main_position_two + 1] = " # ";
-        main_board[main_position_one][main_position_two + 1] = " # ";
-        main_board[main_position_one + 1][main_position_two + 1] = " # ";
+        if (main_position_two + 1 >= main_board.size())
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else
+        {
+            main_board[main_position_one - 1][main_position_two + 1] = " # ";
+            main_board[main_position_one][main_position_two + 1] = " # ";
+            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+        }
     }
     else if (user_input == "a")
     {
-        main_board[main_position_one - 1][main_position_two - 1] = " # ";
-        main_board[main_position_one][main_position_two - 1] = " # ";
-        main_board[main_position_one + 1][main_position_two - 1] = " # ";
+        if (main_position_two - 1 < 0)
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else
+        {
+            main_board[main_position_one - 1][main_position_two - 1] = " # ";
+            main_board[main_position_one][main_position_two - 1] = " # ";
+            main_board[main_position_one + 1][main_position_two - 1] = " # ";
+        }
     }
 }
 
