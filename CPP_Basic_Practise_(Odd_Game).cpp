@@ -106,7 +106,7 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "d")
     {
-        if (main_position_two + 1 >= main_board.size())
+        if (main_position_two + 1 >= main_board.size() || main_position_one - 1 < 0 || main_position_one + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
@@ -119,7 +119,7 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "a")
     {
-        if (main_position_two - 1 < 0)
+        if (main_position_two - 1 < 0 || main_position_one - 1 < 0 || main_position_one + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
@@ -332,7 +332,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    soundtrack();
+    //soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "Controls:" << "\n";
     std::cout << "WASD to move" << "\n";
