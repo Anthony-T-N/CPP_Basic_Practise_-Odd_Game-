@@ -80,7 +80,7 @@ void deploy_shield(std::string& user_input)
 {
     if (user_input == "w")
     {
-        if (main_position_one - 1 < 0)
+        if (main_position_one - 1 < 0 || main_position_two - 1 < 0 || main_position_two + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
@@ -93,7 +93,7 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "s")
     {
-        if (main_position_one + 1 >= main_board.size())
+        if (main_position_one + 1 >= main_board.size() || main_position_two - 1 < 0 || main_position_two + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
@@ -332,7 +332,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    //soundtrack();
+    soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "Controls:" << "\n";
     std::cout << "WASD to move" << "\n";
@@ -341,7 +341,7 @@ int main()
     std::cout << "[@] <= Your character" << "\n";
     std::cout << "[T] <= Tracker" << "\n";
     std::cout << "Type 'Exit' to end application" << "\n\n";
-    std::cout << "Please enter board size: ";
+    std::cout << "Please enter board size (Number): ";
     int board_size;
     //TODO: Ensure user input is always a number.
     std::cin >> board_size;
