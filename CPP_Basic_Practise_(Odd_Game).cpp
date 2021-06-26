@@ -9,7 +9,7 @@ std::vector<std::vector<std::string>> main_board;
 // Current position of player. (Main Character / Current Player)
 int main_position_one, main_position_two;
 // Current position of T. (Tracker)
-int tracker_position_one, tracker_position_two;
+int tracker_position_x, tracker_position_y;
 
 void board_display()
 {
@@ -64,16 +64,16 @@ void item_positioning(int size)
     main_position_two = rand() % (size);
     std::cout << main_position_one << "|" << main_position_two << "\n\n";
     main_board[main_position_one][main_position_two] = "[@]";
-    tracker_position_one = rand() % (size);
-    tracker_position_two = rand() % (size);
+    tracker_position_x = rand() % (size);
+    tracker_position_y = rand() % (size);
     // Detect if tracker spawns at the same position of main character.
-    while (main_position_one == tracker_position_one && main_position_two == tracker_position_two)
+    while (main_position_one == tracker_position_x && main_position_two == tracker_position_y)
     {
         std::cout << "[-] Tracker spawn conflict detected;" << "\n";
-        tracker_position_one = rand() % (size);
-        tracker_position_two = rand() % (size);
+        tracker_position_x = rand() % (size);
+        tracker_position_y = rand() % (size);
     }
-    main_board[tracker_position_one][tracker_position_two] = "[T]";
+    main_board[tracker_position_x][tracker_position_y] = "[T]";
 }
 
 void deploy_shield(std::string& user_input)
@@ -132,81 +132,117 @@ void deploy_shield(std::string& user_input)
     }
 }
 
+bool break_shield(std::string axis, int pos_neg)
+{
+    bool stop_tracker = false;
+    std::cout << "BREAK SHIELD" << "\n";
+    if (axis == "x")
+    {
+        if (main_board[tracker_position_x + pos_neg][tracker_position_y] == " # ")
+        {
+            std::cout << "BLOCK BLOCK BLOCK BLOCK" << "\n";
+            stop_tracker = true;
+        }
+    }
+    else if (axis == "y")
+    {
+        if (main_board[tracker_position_y + pos_neg][tracker_position_y] == " # ")
+        {
+            std::cout << "BLOCK BLOCK BLOCK BLOCK" << "\n";
+            stop_tracker = true;
+        }
+    }
+    return stop_tracker;
+}
+
 void tracker()
 {
     std::cout << "Tracker moving" << "\n";
-    main_board[tracker_position_one][tracker_position_two] = " . ";
+    main_board[tracker_position_x][tracker_position_y] = " . ";
     int random_pos_one = rand() % (2);
-    std::cout << random_pos_one << "\n";
     // Top Left
-    if (tracker_position_one > main_position_one && tracker_position_two > main_position_two)
+    if (tracker_position_x > main_position_one && tracker_position_y > main_position_two)
     {
         if (random_pos_one == 0)
         {
-            tracker_position_one -= 1;
+            //break_shield("x", -1);
+            tracker_position_x -= 1;
         }
         else
         {
-            tracker_position_two -= 1;
+            //break_shield("y", -1);
+            tracker_position_y -= 1;
         }
     }
     // Top right
-    else if (tracker_position_one > main_position_one && tracker_position_two < main_position_two)
+    else if (tracker_position_x > main_position_one && tracker_position_y < main_position_two)
     {
         if (random_pos_one == 0)
         {
-            tracker_position_one -= 1;
+            tracker_position_x -= 1;
         }
         else
         {
-            tracker_position_two += 1;
+            tracker_position_y += 1;
         }
     }
     // Bottom Left
-    else if (tracker_position_one < main_position_one && tracker_position_two > main_position_two)
+    else if (tracker_position_x < main_position_one && tracker_position_y > main_position_two)
     {
         if (random_pos_one == 0)
         {
-            tracker_position_one += 1;
+            tracker_position_x += 1;
         }
         else
         {
-            tracker_position_two -= 1;
+            tracker_position_y -= 1;
         }
     }
     // Bottom Right
-    else if (tracker_position_one < main_position_one && tracker_position_two < main_position_two)
+    else if (tracker_position_x < main_position_one && tracker_position_y < main_position_two)
     {
         if (random_pos_one == 0)
         {
-            tracker_position_one += 1;
+            tracker_position_x += 1;
         }
         else
         {
-            tracker_position_two += 1;
+            tracker_position_y += 1;
         }
     }
     // Right
-    else if (tracker_position_one == main_position_one && tracker_position_two < main_position_two)
+    else if (tracker_position_x == main_position_one && tracker_position_y < main_position_two)
     {
-        tracker_position_two += 1;
+        if (break_shield("y", 1) == false)
+        {
+            tracker_position_y += 1;
+        }
     }
     // Left
-    else if (tracker_position_one == main_position_one && tracker_position_two > main_position_two)
+    else if (tracker_position_x == main_position_one && tracker_position_y > main_position_two)
     {
-        tracker_position_two -= 1;
+        if (break_shield("y", -1) == false)
+        {
+            tracker_position_y -= 1;
+        }
     }
     // Down
-    else if (tracker_position_one < main_position_one && tracker_position_two == main_position_two)
+    else if (tracker_position_x < main_position_one && tracker_position_y == main_position_two)
     {
-        tracker_position_one += 1;
+        if (break_shield("x", 1) == false)
+        {
+            tracker_position_x += 1;
+        }
     }
     // Up
-    else if (tracker_position_one > main_position_one && tracker_position_two == main_position_two)
+    else if (tracker_position_x > main_position_one && tracker_position_y == main_position_two)
     {
-        tracker_position_one -= 1;
+        if (break_shield("x", -1) == false)
+        {
+            tracker_position_x -= 1;
+        }
     }
-    main_board[tracker_position_one][tracker_position_two] = "[T]";
+    main_board[tracker_position_x][tracker_position_y] = "[T]";
 }
 
 int player_control(std::string& user_input)
@@ -360,9 +396,9 @@ int main()
         }
         tracker();
         std::cout << "Main character: " << main_position_one << "|" << main_position_two 
-            << " Tracker: " << tracker_position_one << "|" << tracker_position_two << "\n";
+            << " Tracker: " << tracker_position_x << "|" << tracker_position_y << "\n";
         board_display();
-        if (main_position_one == tracker_position_one && main_position_two == tracker_position_two)
+        if (main_position_one == tracker_position_x && main_position_two == tracker_position_y)
         {
             std::cout << "[-] GAME OVER;" << "\n";
             break;
