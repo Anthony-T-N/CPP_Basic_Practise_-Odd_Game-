@@ -135,20 +135,23 @@ void deploy_shield(std::string& user_input)
 bool break_shield(std::string axis, int pos_neg)
 {
     bool stop_tracker = false;
-    std::cout << "BREAK SHIELD" << "\n";
+    std::cout << "SHIELD BREAK" << "\n";
     if (axis == "x")
     {
         if (main_board[tracker_position_x + pos_neg][tracker_position_y] == " # ")
         {
-            std::cout << "BLOCK BLOCK BLOCK BLOCK" << "\n";
+            std::cout << "X BLOCK" << "\n";
+            main_board[tracker_position_x + pos_neg][tracker_position_y] = " . ";
             stop_tracker = true;
         }
     }
     else if (axis == "y")
     {
-        if (main_board[tracker_position_y + pos_neg][tracker_position_y] == " # ")
+        std::cout << "Debug: break_shield " << axis << " " << pos_neg << "\n";
+        if (main_board[tracker_position_x][tracker_position_y + pos_neg] == " # ")
         {
-            std::cout << "BLOCK BLOCK BLOCK BLOCK" << "\n";
+            std::cout << "Y BLOCK" << "\n";
+            main_board[tracker_position_x][tracker_position_y + pos_neg] = " . ";
             stop_tracker = true;
         }
     }
