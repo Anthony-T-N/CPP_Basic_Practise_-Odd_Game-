@@ -56,6 +56,7 @@ void item_positioning(int size)
     // Generate number between 0 and size.
     for (int i = 0; i <= 5; i++)
     {
+        // Integer division by zero error here.
         main_board[rand() % (size)][rand() % (size)] = "[#]";
         main_board[rand() % (size)][rand() % (size)] = "[!]";
         main_board[rand() % (size)][rand() % (size)] = "[%]";
@@ -141,6 +142,12 @@ bool break_shield(std::string axis, int pos_neg)
         if (main_board[tracker_position_x + pos_neg][tracker_position_y] == " # ")
         {
             std::cout << "X BLOCK" << "\n";
+            main_board[tracker_position_x + pos_neg][tracker_position_y] = " = ";
+            stop_tracker = true;
+        }
+        else if (main_board[tracker_position_x + pos_neg][tracker_position_y] == " = ")
+        {
+            std::cout << "X BLOCK" << "\n";
             main_board[tracker_position_x + pos_neg][tracker_position_y] = " . ";
             stop_tracker = true;
         }
@@ -149,6 +156,12 @@ bool break_shield(std::string axis, int pos_neg)
     {
         std::cout << "Debug: break_shield " << axis << " " << pos_neg << "\n";
         if (main_board[tracker_position_x][tracker_position_y + pos_neg] == " # ")
+        {
+            std::cout << "Y BLOCK" << "\n";
+            main_board[tracker_position_x][tracker_position_y + pos_neg] = " = ";
+            stop_tracker = true;
+        }
+        else if (main_board[tracker_position_x][tracker_position_y + pos_neg] == " = ")
         {
             std::cout << "Y BLOCK" << "\n";
             main_board[tracker_position_x][tracker_position_y + pos_neg] = " . ";
@@ -361,6 +374,21 @@ void soundtrack()
 }
 // =====================================================================================
 
+void game_instructions()
+{
+    std::cout << " . . . . . . . | . . . . . . . " << "\n";
+    std::cout << " . . . . . . . | . . . . . . . " << "\n";
+    std::cout << " @ . . . . . . | . . . . . . @ " << "\n";
+    std::cout << " . . . . . . . | . . . . . . . " << "\n";
+    std::cout << " . . . . . . . | . . . . . . . " << "\n";
+    std::cout << "===============" << "\n";
+    std::cout << " . . . . . . . | . . . . . . . | . . . . . . . " << "\n";
+    std::cout << " . . . # . . . | . . . # . . . | . . . # . . . " << "\n";
+    std::cout << " . . T # @ . . | . . T = . @ . | . . T . . . @ " << "\n";
+    std::cout << " . . . # . . . | . . . # . . . | . . . # . . . " << "\n";
+    std::cout << " . . . . . . . | . . . . . . . | . . . . . . . " << "\n";
+}
+
 int main()
 {
     std::cout << "=======================================" << "\n";
@@ -380,6 +408,13 @@ int main()
     std::cout << "[@] <= Your character" << "\n";
     std::cout << "[T] <= Tracker" << "\n";
     std::cout << "Type 'Exit' to end application" << "\n\n";
+    std::cout << "Instructions ? " << "\n";
+    char instructions;
+    std::cin >> instructions; 
+    if (instructions == 'y')
+    {
+        game_instructions();
+    }
     std::cout << "Please enter board size (Number): ";
     int board_size;
     //TODO: Ensure user input is always a number.
