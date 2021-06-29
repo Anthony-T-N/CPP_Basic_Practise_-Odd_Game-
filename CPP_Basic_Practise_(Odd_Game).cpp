@@ -376,17 +376,21 @@ void soundtrack()
 
 void game_instructions()
 {
+    std::cout << "\n";
+    std::cout << "> Enter 't' and then enter a direction to teleport" << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
     std::cout << " @ . . . . . . | . . . . . . @ " << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
-    std::cout << "===============" << "\n";
+    std::cout << "===============================" << "\n";
+    std::cout << "> Enter 'z' and then enter a direction to deploy a shield." << "\n";
+    std::cout << "> Tracker spends a couple of turns breaking shield." << "\n";
     std::cout << " . . . . . . . | . . . . . . . | . . . . . . . " << "\n";
     std::cout << " . . . # . . . | . . . # . . . | . . . # . . . " << "\n";
     std::cout << " . . T # @ . . | . . T = . @ . | . . T . . . @ " << "\n";
     std::cout << " . . . # . . . | . . . # . . . | . . . # . . . " << "\n";
-    std::cout << " . . . . . . . | . . . . . . . | . . . . . . . " << "\n";
+    std::cout << " . . . . . . . | . . . . . . . | . . . . . . . " << "\n\n";
 }
 
 int main()
@@ -410,7 +414,8 @@ int main()
     std::cout << "Type 'Exit' to end application" << "\n\n";
     std::cout << "Instructions ? " << "\n";
     char instructions;
-    std::cin >> instructions; 
+    std::cin >> instructions;
+    instructions = tolower(instructions);
     if (instructions == 'y')
     {
         game_instructions();
