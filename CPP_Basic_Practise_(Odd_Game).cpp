@@ -377,7 +377,15 @@ void soundtrack()
 void game_instructions()
 {
     std::cout << "\n";
-    std::cout << "> Enter 't' and then enter a direction to teleport" << "\n";
+    std::cout << "> Controls:" << "\n";
+    std::cout << "WASD to move" << "\n";
+    std::cout << "t to teleport" << "\n";
+    std::cout << "z to deploy shield" << "\n";
+    std::cout << "Type 'Exit' to end application" << "\n\n";
+    std::cout << "> Characters:" << "\n";
+    std::cout << "[@] <= Your character" << "\n";
+    std::cout << "[T] <= Tracker" << "\n\n";
+    std::cout << "> Enter 't' and then enter a direction to teleport." << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
     std::cout << " @ . . . . . . | . . . . . . @ " << "\n";
@@ -405,14 +413,7 @@ int main()
     // Never trust user input.
     soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
-    std::cout << "Controls:" << "\n";
-    std::cout << "WASD to move" << "\n";
-    std::cout << "t to teleport" << "\n";
-    std::cout << "z to deploy shield" << "\n";
-    std::cout << "[@] <= Your character" << "\n";
-    std::cout << "[T] <= Tracker" << "\n";
-    std::cout << "Type 'Exit' to end application" << "\n\n";
-    std::cout << "Instructions ? " << "\n";
+    std::cout << "Instructions (y/n): " << "\n";
     char instructions;
     std::cin >> instructions;
     instructions = tolower(instructions);
@@ -420,10 +421,20 @@ int main()
     {
         game_instructions();
     }
-    std::cout << "Please enter board size (Number): ";
+    std::cout << "Please enter board size (int): ";
     int board_size;
     //TODO: Ensure user input is always a number.
+    //TODO: Ensure user input is never 1.
     std::cin >> board_size;
+    std::cout << isdigit(board_size) << "\n";
+    while (isdigit(board_size) == 0)
+    {
+        std::cout << isdigit(board_size) << "\n";
+        std::cin.clear();
+        std::cin.ignore(INT_MAX, '\n');
+        std::cout << "Please enter board size (int): ";
+        std::cin >> board_size;
+    }
     board_generation(board_size);
     std::cout << "\n\n";
     item_positioning(board_size);
