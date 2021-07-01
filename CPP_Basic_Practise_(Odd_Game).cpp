@@ -411,7 +411,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    soundtrack();
+    //soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "Instructions (y/n): " << "\n";
     char instructions;
@@ -426,15 +426,32 @@ int main()
     //TODO: Ensure user input is always a number.
     //TODO: Ensure user input is never 1.
     std::cin >> board_size;
-    std::cout << isdigit(board_size) << "\n";
-    while (isdigit(board_size) == 0)
+    
+    while (std::cin.fail())
     {
-        std::cout << isdigit(board_size) << "\n";
+        // user didn't input a number
+        std::cin.clear(); // reset failbit
+        std::cin.ignore(INT_MAX, '\n'); //skip bad input
+        // next, request user reinput
+        std::cout << "Please enter board size (int): ";
+        std::cin >> board_size;
+    }
+    
+    /*
+    std::cout << isdigit(board_size[0]) << "\n";
+    while (isdigit(std::to_string(board_size)[0]) == 4)
+    {
+        // https://stackoverflow.com/questions/257091/how-do-i-flush-the-cin-buffer
+        // https://stackoverflow.com/questions/5655142/how-to-check-if-input-is-numeric-in-c
+        std::cout << isdigit(std::to_string(board_size)[0]) << "\n";
         std::cin.clear();
         std::cin.ignore(INT_MAX, '\n');
         std::cout << "Please enter board size (int): ";
         std::cin >> board_size;
+        std::cout << "Board_size: " << board_size << "\n";
     }
+    */
+    std::cout << "Pass While:" << "\n";
     board_generation(board_size);
     std::cout << "\n\n";
     item_positioning(board_size);
