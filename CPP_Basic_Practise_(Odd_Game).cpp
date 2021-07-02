@@ -422,36 +422,24 @@ int main()
         game_instructions();
     }
     std::cout << "Please enter board size (int): ";
-    int board_size;
+    std::string user_input;
     //TODO: Ensure user input is always a number.
     //TODO: Ensure user input is never 1.
-    std::cin >> board_size;
-    
-    while (std::cin.fail())
+    //TODO: Fix cases where input: <number><space><characters> accepted.
+    std::cin >> user_input;
+    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos)
     {
+        // https://stackoverflow.com/questions/18728754/checking-cin-input-stream-produces-an-integer
         // user didn't input a number
-        std::cin.clear(); // reset failbit
-        std::cin.ignore(INT_MAX, '\n'); //skip bad input
+        std::cin.clear(); // Reset the failed state
+        //std::cin.ignore(INT_MAX, '\n'); //skip bad input
+        std::cin.ignore(256, '\n');
         // next, request user reinput
         std::cout << "Please enter board size (int): ";
-        std::cin >> board_size;
+        std::cin >> user_input;
+        std::cout << user_input << "\n";
     }
-    
-    /*
-    std::cout << isdigit(board_size[0]) << "\n";
-    while (isdigit(std::to_string(board_size)[0]) == 4)
-    {
-        // https://stackoverflow.com/questions/257091/how-do-i-flush-the-cin-buffer
-        // https://stackoverflow.com/questions/5655142/how-to-check-if-input-is-numeric-in-c
-        std::cout << isdigit(std::to_string(board_size)[0]) << "\n";
-        std::cin.clear();
-        std::cin.ignore(INT_MAX, '\n');
-        std::cout << "Please enter board size (int): ";
-        std::cin >> board_size;
-        std::cout << "Board_size: " << board_size << "\n";
-    }
-    */
-    std::cout << "Pass While:" << "\n";
+    int board_size = stoi(user_input);
     board_generation(board_size);
     std::cout << "\n\n";
     item_positioning(board_size);
