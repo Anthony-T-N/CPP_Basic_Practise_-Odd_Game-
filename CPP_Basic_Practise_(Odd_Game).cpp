@@ -426,9 +426,22 @@ int main()
     //TODO: Ensure user input is always a number.
     //TODO: Ensure user input is never 1.
     //TODO: Fix cases where input: <number><space><characters> accepted.
-    std::cin >> user_input;
-    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos)
+
+    // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
+    // Note: Input given to std::cin will stop at newline character (Last character before white space).
+    std::getline(std::cin, user_input);
+    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos || user_input.find_first_not_of("\t\n ") == std::string::npos)
     {
+        for (int i = 0; i < user_input.length(); i++)
+        {
+            std::cout << user_input[i] << "\n";
+            if (user_input[i] == ' ')
+            {
+                std::cout << "Contains space" << "\n";
+            }
+        }
+        bool result = user_input.find_first_not_of("\t\n ") == std::string::npos;
+        std::cout << "Result: " << result << "\n";
         // https://stackoverflow.com/questions/18728754/checking-cin-input-stream-produces-an-integer
         // user didn't input a number
         std::cin.clear(); // Reset the failed state
@@ -436,7 +449,7 @@ int main()
         std::cin.ignore(256, '\n');
         // next, request user reinput
         std::cout << "Please enter board size (int): ";
-        std::cin >> user_input;
+        std::getline(std::cin, user_input);
         std::cout << user_input << "\n";
     }
     int board_size = stoi(user_input);
