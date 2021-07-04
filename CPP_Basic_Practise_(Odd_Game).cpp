@@ -413,11 +413,11 @@ int main()
     // Never trust user input.
     //soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
-    std::cout << "Instructions (y/n): " << "\n";
-    char instructions;
-    std::cin >> instructions;
-    instructions = tolower(instructions);
-    if (instructions == 'y')
+    std::cout << "Instructions (y): " << "\n";
+    std::string instructions;
+    std::getline(std::cin, instructions);
+    instructions = tolower(instructions[0]);
+    if (instructions == "y")
     {
         game_instructions();
     }
@@ -430,27 +430,16 @@ int main()
     // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
     // Note: Input given to std::cin will stop at newline character (Last character before white space).
     std::getline(std::cin, user_input);
-    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos || user_input.find_first_not_of("\t\n ") == std::string::npos)
+    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos)
     {
-        for (int i = 0; i < user_input.length(); i++)
-        {
-            std::cout << user_input[i] << "\n";
-            if (user_input[i] == ' ')
-            {
-                std::cout << "Contains space" << "\n";
-            }
-        }
-        bool result = user_input.find_first_not_of("\t\n ") == std::string::npos;
-        std::cout << "Result: " << result << "\n";
         // https://stackoverflow.com/questions/18728754/checking-cin-input-stream-produces-an-integer
         // user didn't input a number
-        std::cin.clear(); // Reset the failed state
+        //std::cin.clear(); // Reset the failed state
         //std::cin.ignore(INT_MAX, '\n'); //skip bad input
-        std::cin.ignore(256, '\n');
+        //std::cin.ignore(256, '\n');
         // next, request user reinput
-        std::cout << "Please enter board size (int): ";
+        std::cout << "Incorrect Input - Please enter board size (int): ";
         std::getline(std::cin, user_input);
-        std::cout << user_input << "\n";
     }
     int board_size = stoi(user_input);
     board_generation(board_size);
