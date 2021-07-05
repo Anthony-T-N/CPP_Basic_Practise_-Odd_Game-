@@ -378,9 +378,9 @@ void game_instructions()
 {
     std::cout << "\n";
     std::cout << "> Controls:" << "\n";
-    std::cout << "WASD to move" << "\n";
-    std::cout << "t to teleport" << "\n";
-    std::cout << "z to deploy shield" << "\n";
+    std::cout << "'WASD' to move" << "\n";
+    std::cout << "'t' to teleport" << "\n";
+    std::cout << "'z' to deploy shield" << "\n";
     std::cout << "Type 'Exit' to end application" << "\n\n";
     std::cout << "> Characters:" << "\n";
     std::cout << "[@] <= Your character" << "\n";
@@ -416,17 +416,13 @@ int main()
     std::cout << "Instructions (y): " << "\n";
     std::string instructions;
     std::getline(std::cin, instructions);
-    instructions = tolower(instructions[0]);
     if (instructions == "y")
     {
         game_instructions();
     }
     std::cout << "Please enter board size (int): ";
     std::string user_input;
-    //TODO: Ensure user input is always a number.
     //TODO: Ensure user input is never 1.
-    //TODO: Fix cases where input: <number><space><characters> accepted.
-
     // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
     // Note: Input given to std::cin will stop at newline character (Last character before white space).
     std::getline(std::cin, user_input);
@@ -451,6 +447,11 @@ int main()
         std::string user_input;
         std::cout << "User input: ";
         std::cin >> user_input;
+        for (int i = 0; i <= user_input.length(); i++)
+        {
+            user_input[i] = tolower(user_input[i]);
+            std::cout << user_input[i] << "\n";
+        }
         if (player_control(user_input) == 1)
         {
             break;
