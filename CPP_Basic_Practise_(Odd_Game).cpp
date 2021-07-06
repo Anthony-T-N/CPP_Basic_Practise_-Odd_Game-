@@ -360,17 +360,24 @@ void soundtrack()
     // https://stackoverflow.com/questions/28656004/c-random-doesnt-workreturns-same-value-always
     srand(time(NULL));
     std::string play_track = "";
-    if (0 == rand() % 2)
+    int track_number = rand() % 3;
+    if (track_number == 0)
     {
         play_track = "Mixdown.wav";
         PlaySound(TEXT("Mixdown.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+    }
+    else if (track_number == 1)
+    {
+        play_track = "Glitch.wav";
+        PlaySound(TEXT("Glitch.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
     }
     else
     {
         play_track = "E2T4.wav";
         PlaySound(TEXT("E2T4.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
     }
-    std::cout << "Playing Track: " << play_track << "\n";
+    
+    std::cout << track_number << ") Playing Track: " << play_track << "\n";
 }
 // =====================================================================================
 
@@ -411,9 +418,9 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    //soundtrack();
+    soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
-    std::cout << "Instructions (y): " << "\n";
+    std::cout << "Instructions (y): ";
     std::string instructions;
     std::getline(std::cin, instructions);
     if (instructions == "y")
@@ -426,7 +433,7 @@ int main()
     // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
     // Note: Input given to std::cin will stop at newline character (Last character before white space).
     std::getline(std::cin, user_input);
-    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos)
+    while (std::cin.fail() || user_input.find_first_not_of("0123456789") != std::string::npos || user_input == "1")
     {
         // https://stackoverflow.com/questions/18728754/checking-cin-input-stream-produces-an-integer
         // user didn't input a number
@@ -434,7 +441,7 @@ int main()
         //std::cin.ignore(INT_MAX, '\n'); //skip bad input
         //std::cin.ignore(256, '\n');
         // next, request user reinput
-        std::cout << "Incorrect Input - Please enter board size (int): ";
+        std::cout << "[-] Incorrect input - Please enter board size (int): ";
         std::getline(std::cin, user_input);
     }
     int board_size = stoi(user_input);
@@ -449,6 +456,7 @@ int main()
         std::cin >> user_input;
         for (int i = 0; i <= user_input.length(); i++)
         {
+            // std::string are mutable in C++. Thus why this works.
             user_input[i] = tolower(user_input[i]);
             std::cout << user_input[i] << "\n";
         }
