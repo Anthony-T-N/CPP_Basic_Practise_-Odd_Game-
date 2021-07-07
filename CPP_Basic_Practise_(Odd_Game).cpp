@@ -136,9 +136,9 @@ void deploy_shield(std::string& user_input)
 bool break_shield(std::string axis, int pos_neg)
 {
     bool stop_tracker = false;
-    std::cout << "SHIELD BREAK" << "\n";
     if (axis == "x")
     {
+        std::cout << "Debug: break_shield " << axis << " " << pos_neg << "\n";
         if (main_board[tracker_position_x + pos_neg][tracker_position_y] == " # ")
         {
             std::cout << "X BLOCK" << "\n";
@@ -181,13 +181,17 @@ void tracker()
     {
         if (random_pos_one == 0)
         {
-            //break_shield("x", -1);
-            tracker_position_x -= 1;
+            if (break_shield("x", -1) == false)
+            {
+                tracker_position_x -= 1;
+            }
         }
         else
         {
-            //break_shield("y", -1);
-            tracker_position_y -= 1;
+            if (break_shield("y", -1) == false)
+            {
+                tracker_position_y -= 1;
+            }
         }
     }
     // Top right
@@ -195,11 +199,17 @@ void tracker()
     {
         if (random_pos_one == 0)
         {
-            tracker_position_x -= 1;
+            if (break_shield("x", -1) == false)
+            {
+                tracker_position_x -= 1;
+            }
         }
         else
         {
-            tracker_position_y += 1;
+            if (break_shield("y", 1) == false)
+            {
+                tracker_position_y += 1;
+            }
         }
     }
     // Bottom Left
@@ -207,11 +217,17 @@ void tracker()
     {
         if (random_pos_one == 0)
         {
-            tracker_position_x += 1;
+            if (break_shield("x", 1) == false)
+            {
+                tracker_position_x += 1;
+            }
         }
         else
         {
-            tracker_position_y -= 1;
+            if (break_shield("y", -1) == false)
+            {
+                tracker_position_y -= 1;
+            }
         }
     }
     // Bottom Right
@@ -219,11 +235,17 @@ void tracker()
     {
         if (random_pos_one == 0)
         {
-            tracker_position_x += 1;
+            if (break_shield("x", 1) == false)
+            {
+                tracker_position_x += 1;
+            }
         }
         else
         {
-            tracker_position_y += 1;
+            if (break_shield("y", 1) == false)
+            {
+                tracker_position_y += 1;
+            }
         }
     }
     // Right
