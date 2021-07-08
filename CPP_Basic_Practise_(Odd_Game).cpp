@@ -46,8 +46,7 @@ void board_generation(int &size)
         }
         main_board.push_back(board_sector);
     }
-    board_display();
-    
+    board_display();   
 }
 
 void item_positioning(int size)
@@ -440,18 +439,18 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    soundtrack();
+    //soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
-    std::cout << "Instructions (y): ";
+    std::cout << "> Instructions (y): ";
     std::string instructions;
     std::getline(std::cin, instructions);
     if (instructions == "y")
     {
         game_instructions();
     }
-    std::cout << "Please enter board size (int): ";
+    std::cout << "> Please enter board size (int): ";
     std::string user_input;
-    //TODO: Ensure user input is never 1.
+    //TODO: Restrict input to below 50.
     // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
     // Note: Input given to std::cin will stop at newline character (Last character before white space).
     std::getline(std::cin, user_input);
@@ -467,6 +466,17 @@ int main()
         std::getline(std::cin, user_input);
     }
     int board_size = stoi(user_input);
+    if (board_size >= 50)
+    {
+        std::cout << "[!] Warning, the application is generating a board size that will likely cause headaches when played. Would you like to contiune ? (n): ";
+        std::getline(std::cin, user_input);
+        if (user_input == "n")
+        {
+            std::cout << "[!] END" << "\n";
+            std::cout << "[!] Exiting..." << "\n\n";
+            return 0;
+        }
+    }
     board_generation(board_size);
     std::cout << "\n\n";
     item_positioning(board_size);
