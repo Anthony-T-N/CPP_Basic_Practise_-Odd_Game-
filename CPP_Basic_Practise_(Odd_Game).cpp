@@ -80,9 +80,21 @@ void deploy_shield(std::string& user_input)
 {
     if (user_input == "w")
     {
-        if (main_position_one - 1 < 0 || main_position_two - 1 < 0 || main_position_two + 1 >= main_board.size())
+        if (main_position_one - 1 < 0)
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else if (main_position_two - 1 < 0)
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one - 1][main_position_two] = " # ";
+            main_board[main_position_one - 1][main_position_two + 1] = " # ";
+        }
+        else if (main_position_two + 1 >= main_board.size())
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one - 1][main_position_two - 1] = " # ";
+            main_board[main_position_one - 1][main_position_two] = " # ";
         }
         else
         {
@@ -93,9 +105,21 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "s")
     {
-        if (main_position_one + 1 >= main_board.size() || main_position_two - 1 < 0 || main_position_two + 1 >= main_board.size())
+        if (main_position_one + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else if (main_position_two - 1 < 0)
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one + 1][main_position_two] = " # ";
+            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+        }
+        else if (main_position_two + 1 >= main_board.size())
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one + 1][main_position_two - 1] = " # ";
+            main_board[main_position_one + 1][main_position_two] = " # ";
         }
         else
         {
