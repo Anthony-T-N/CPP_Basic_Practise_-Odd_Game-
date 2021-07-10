@@ -130,9 +130,22 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "d")
     {
-        if (main_position_two + 1 >= main_board.size() || main_position_one - 1 < 0 || main_position_one + 1 >= main_board.size())
+        if (main_position_two + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
+
+        }
+        else if (main_position_one - 1 < 0)
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one][main_position_two + 1] = " # ";
+            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+        }
+        else if (main_position_one + 1 >= main_board.size())
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one - 1][main_position_two + 1] = " # ";
+            main_board[main_position_one][main_position_two + 1] = " # ";
         }
         else
         {
@@ -143,9 +156,21 @@ void deploy_shield(std::string& user_input)
     }
     else if (user_input == "a")
     {
-        if (main_position_two - 1 < 0 || main_position_one - 1 < 0 || main_position_one + 1 >= main_board.size())
+        if (main_position_two - 1 < 0)
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
+        }
+        else if (main_position_one - 1 < 0)
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one][main_position_two - 1] = " # ";
+            main_board[main_position_one + 1][main_position_two - 1] = " # ";
+        }
+        else if (main_position_one + 1 >= main_board.size())
+        {
+            std::cout << "[-] Beyond Boundary Error" << "\n";
+            main_board[main_position_one - 1][main_position_two - 1] = " # ";
+            main_board[main_position_one][main_position_two - 1] = " # ";
         }
         else
         {
@@ -463,7 +488,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    //soundtrack();
+    soundtrack();
     std::cout << "Welcome friend!" << "\n\n";
     std::cout << "> Instructions (y): ";
     std::string instructions;
