@@ -478,28 +478,10 @@ void game_instructions()
     std::cout << " . . . . . . . | . . . . . . . | . . . . . . . " << "\n\n";
 }
 
-int main()
+std::string user_input_validation()
 {
-    std::cout << "=======================================" << "\n";
-    std::cout << "- CPP_Basic_Practise_(Odd_Game) console application" << "\n";
-    std::cout << "- Console Application Version: 1.0" << "\n";
-    std::cout << "- Created By: Anthony N." << "\n";
-    // https://en.cppreference.com/w/cpp/filesystem/current_path
-    std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
-    std::cout << "=======================================" << "\n\n";
-    // Never trust user input.
-    soundtrack();
-    std::cout << "Welcome friend!" << "\n\n";
-    std::cout << "> Instructions (y): ";
-    std::string instructions;
-    std::getline(std::cin, instructions);
-    if (instructions == "y")
-    {
-        game_instructions();
-    }
     std::cout << "> Please enter board size (int): ";
     std::string user_input;
-    //TODO: Restrict input to below 50.
     // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
     // Note: Input given to std::cin will stop at newline character (Last character before white space).
     std::getline(std::cin, user_input);
@@ -514,16 +496,43 @@ int main()
         std::cout << "[-] Incorrect input - Please enter board size (int): ";
         std::getline(std::cin, user_input);
     }
+    return user_input;
+}
+
+int main()
+{
+    std::cout << "=======================================" << "\n";
+    std::cout << "- CPP_Basic_Practise_(Odd_Game) console application" << "\n";
+    std::cout << "- Console Application Version: 1.0" << "\n";
+    std::cout << "- Created By: Anthony N." << "\n";
+    // https://en.cppreference.com/w/cpp/filesystem/current_path
+    std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
+    std::cout << "=======================================" << "\n\n";
+    // Never trust user input.
+    //soundtrack();
+    std::cout << "Welcome friend!" << "\n\n";
+    std::cout << "> Instructions (y): ";
+    std::string instructions;
+    std::getline(std::cin, instructions);
+    if (instructions == "y")
+    {
+        game_instructions();
+    }
+    std::string user_input = user_input_validation();
+    //TODO: Restrict input to below 50.
     int board_size = stoi(user_input);
-    if (board_size >= 50)
+    while (board_size >= 50)
     {
         std::cout << "[!] Warning, the application is generating a board size that will likely cause headaches when played. Would you like to contiune ? (n): ";
         std::getline(std::cin, user_input);
         if (user_input == "n")
         {
-            std::cout << "[!] END" << "\n";
-            std::cout << "[!] Exiting..." << "\n\n";
-            return 0;
+            std::string user_input = user_input_validation();
+            board_size = stoi(user_input);
+        }
+        else
+        {
+            break;
         }
     }
     board_generation(board_size);
