@@ -86,13 +86,11 @@ void deploy_shield(std::string& user_input)
         }
         else if (main_position_two - 1 < 0)
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one - 1][main_position_two] = " # ";
             main_board[main_position_one - 1][main_position_two + 1] = " # ";
         }
         else if (main_position_two + 1 >= main_board.size())
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one - 1][main_position_two - 1] = " # ";
             main_board[main_position_one - 1][main_position_two] = " # ";
         }
@@ -111,13 +109,11 @@ void deploy_shield(std::string& user_input)
         }
         else if (main_position_two - 1 < 0)
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one + 1][main_position_two] = " # ";
             main_board[main_position_one + 1][main_position_two + 1] = " # ";
         }
         else if (main_position_two + 1 >= main_board.size())
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one + 1][main_position_two - 1] = " # ";
             main_board[main_position_one + 1][main_position_two] = " # ";
         }
@@ -137,13 +133,11 @@ void deploy_shield(std::string& user_input)
         }
         else if (main_position_one - 1 < 0)
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one][main_position_two + 1] = " # ";
             main_board[main_position_one + 1][main_position_two + 1] = " # ";
         }
         else if (main_position_one + 1 >= main_board.size())
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one - 1][main_position_two + 1] = " # ";
             main_board[main_position_one][main_position_two + 1] = " # ";
         }
@@ -162,13 +156,11 @@ void deploy_shield(std::string& user_input)
         }
         else if (main_position_one - 1 < 0)
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one][main_position_two - 1] = " # ";
             main_board[main_position_one + 1][main_position_two - 1] = " # ";
         }
         else if (main_position_one + 1 >= main_board.size())
         {
-            std::cout << "[-] Beyond Boundary Error" << "\n";
             main_board[main_position_one - 1][main_position_two - 1] = " # ";
             main_board[main_position_one][main_position_two - 1] = " # ";
         }
@@ -514,18 +506,17 @@ int main()
     std::cout << "> Instructions (y): ";
     std::string instructions;
     std::getline(std::cin, instructions);
-    if (instructions == "y")
+    if (instructions == "y" || instructions == "Y")
     {
         game_instructions();
     }
     std::string user_input = user_input_validation();
-    //TODO: Restrict input to below 50.
     int board_size = stoi(user_input);
     while (board_size >= 50)
     {
         std::cout << "[!] Warning, the application is generating a board size that will likely cause headaches when played. Would you like to contiune ? (n): ";
         std::getline(std::cin, user_input);
-        if (user_input == "n")
+        if (user_input == "n" || user_input == "N")
         {
             std::string user_input = user_input_validation();
             board_size = stoi(user_input);
