@@ -7,7 +7,7 @@
 // 2D Vectory array.
 std::vector<std::vector<std::string>> main_board;
 // Current position of player. (Main Character / Current Player)
-int main_position_one, main_position_two;
+int main_position_x, main_position_y;
 // Current position of T. (Tracker)
 int tracker_position_x, tracker_position_y;
 
@@ -60,14 +60,14 @@ void item_positioning(int size)
         main_board[rand() % (size)][rand() % (size)] = "[!]";
         main_board[rand() % (size)][rand() % (size)] = "[%]";
     }
-    main_position_one = rand() % (size);
-    main_position_two = rand() % (size);
-    std::cout << main_position_one << "|" << main_position_two << "\n\n";
-    main_board[main_position_one][main_position_two] = "[@]";
+    main_position_x = rand() % (size);
+    main_position_y = rand() % (size);
+    std::cout << main_position_x << "|" << main_position_y << "\n\n";
+    main_board[main_position_x][main_position_y] = "[@]";
     tracker_position_x = rand() % (size);
     tracker_position_y = rand() % (size);
     // Detect if tracker spawns at the same position of main character.
-    while (main_position_one == tracker_position_x && main_position_two == tracker_position_y)
+    while (main_position_x == tracker_position_x && main_position_y == tracker_position_y)
     {
         std::cout << "[-] Tracker spawn conflict detected;" << "\n";
         tracker_position_x = rand() % (size);
@@ -80,95 +80,95 @@ void deploy_shield(std::string& user_input)
 {
     if (user_input == "w")
     {
-        if (main_position_one - 1 < 0)
+        if (main_position_x - 1 < 0)
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
-        else if (main_position_two - 1 < 0)
+        else if (main_position_y - 1 < 0)
         {
-            main_board[main_position_one - 1][main_position_two] = " # ";
-            main_board[main_position_one - 1][main_position_two + 1] = " # ";
+            main_board[main_position_x - 1][main_position_y] = " # ";
+            main_board[main_position_x - 1][main_position_y + 1] = " # ";
         }
-        else if (main_position_two + 1 >= main_board.size())
+        else if (main_position_y + 1 >= main_board.size())
         {
-            main_board[main_position_one - 1][main_position_two - 1] = " # ";
-            main_board[main_position_one - 1][main_position_two] = " # ";
+            main_board[main_position_x - 1][main_position_y - 1] = " # ";
+            main_board[main_position_x - 1][main_position_y] = " # ";
         }
         else
         {
-            main_board[main_position_one - 1][main_position_two - 1] = " # ";
-            main_board[main_position_one - 1][main_position_two] = " # ";
-            main_board[main_position_one - 1][main_position_two + 1] = " # ";
+            main_board[main_position_x - 1][main_position_y - 1] = " # ";
+            main_board[main_position_x - 1][main_position_y] = " # ";
+            main_board[main_position_x - 1][main_position_y + 1] = " # ";
         }
     }
     else if (user_input == "s")
     {
-        if (main_position_one + 1 >= main_board.size())
+        if (main_position_x + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
-        else if (main_position_two - 1 < 0)
+        else if (main_position_y - 1 < 0)
         {
-            main_board[main_position_one + 1][main_position_two] = " # ";
-            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+            main_board[main_position_x + 1][main_position_y] = " # ";
+            main_board[main_position_x + 1][main_position_y + 1] = " # ";
         }
-        else if (main_position_two + 1 >= main_board.size())
+        else if (main_position_y + 1 >= main_board.size())
         {
-            main_board[main_position_one + 1][main_position_two - 1] = " # ";
-            main_board[main_position_one + 1][main_position_two] = " # ";
+            main_board[main_position_x + 1][main_position_y - 1] = " # ";
+            main_board[main_position_x + 1][main_position_y] = " # ";
         }
         else
         {
-            main_board[main_position_one + 1][main_position_two - 1] = " # ";
-            main_board[main_position_one + 1][main_position_two] = " # ";
-            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+            main_board[main_position_x + 1][main_position_y - 1] = " # ";
+            main_board[main_position_x + 1][main_position_y] = " # ";
+            main_board[main_position_x + 1][main_position_y + 1] = " # ";
         }
     }
     else if (user_input == "d")
     {
-        if (main_position_two + 1 >= main_board.size())
+        if (main_position_y + 1 >= main_board.size())
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
 
         }
-        else if (main_position_one - 1 < 0)
+        else if (main_position_x - 1 < 0)
         {
-            main_board[main_position_one][main_position_two + 1] = " # ";
-            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+            main_board[main_position_x][main_position_y + 1] = " # ";
+            main_board[main_position_x + 1][main_position_y + 1] = " # ";
         }
-        else if (main_position_one + 1 >= main_board.size())
+        else if (main_position_x + 1 >= main_board.size())
         {
-            main_board[main_position_one - 1][main_position_two + 1] = " # ";
-            main_board[main_position_one][main_position_two + 1] = " # ";
+            main_board[main_position_x - 1][main_position_y + 1] = " # ";
+            main_board[main_position_x][main_position_y + 1] = " # ";
         }
         else
         {
-            main_board[main_position_one - 1][main_position_two + 1] = " # ";
-            main_board[main_position_one][main_position_two + 1] = " # ";
-            main_board[main_position_one + 1][main_position_two + 1] = " # ";
+            main_board[main_position_x - 1][main_position_y + 1] = " # ";
+            main_board[main_position_x][main_position_y + 1] = " # ";
+            main_board[main_position_x + 1][main_position_y + 1] = " # ";
         }
     }
     else if (user_input == "a")
     {
-        if (main_position_two - 1 < 0)
+        if (main_position_y - 1 < 0)
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
-        else if (main_position_one - 1 < 0)
+        else if (main_position_x - 1 < 0)
         {
-            main_board[main_position_one][main_position_two - 1] = " # ";
-            main_board[main_position_one + 1][main_position_two - 1] = " # ";
+            main_board[main_position_x][main_position_y - 1] = " # ";
+            main_board[main_position_x + 1][main_position_y - 1] = " # ";
         }
-        else if (main_position_one + 1 >= main_board.size())
+        else if (main_position_x + 1 >= main_board.size())
         {
-            main_board[main_position_one - 1][main_position_two - 1] = " # ";
-            main_board[main_position_one][main_position_two - 1] = " # ";
+            main_board[main_position_x - 1][main_position_y - 1] = " # ";
+            main_board[main_position_x][main_position_y - 1] = " # ";
         }
         else
         {
-            main_board[main_position_one - 1][main_position_two - 1] = " # ";
-            main_board[main_position_one][main_position_two - 1] = " # ";
-            main_board[main_position_one + 1][main_position_two - 1] = " # ";
+            main_board[main_position_x - 1][main_position_y - 1] = " # ";
+            main_board[main_position_x][main_position_y - 1] = " # ";
+            main_board[main_position_x + 1][main_position_y - 1] = " # ";
         }
     }
 }
@@ -217,7 +217,7 @@ void tracker()
     main_board[tracker_position_x][tracker_position_y] = " . ";
     int random_pos_one = rand() % (2);
     // Top Left
-    if (tracker_position_x > main_position_one && tracker_position_y > main_position_two)
+    if (tracker_position_x > main_position_x && tracker_position_y > main_position_y)
     {
         if (random_pos_one == 0)
         {
@@ -235,7 +235,7 @@ void tracker()
         }
     }
     // Top right
-    else if (tracker_position_x > main_position_one && tracker_position_y < main_position_two)
+    else if (tracker_position_x > main_position_x && tracker_position_y < main_position_y)
     {
         if (random_pos_one == 0)
         {
@@ -253,7 +253,7 @@ void tracker()
         }
     }
     // Bottom Left
-    else if (tracker_position_x < main_position_one && tracker_position_y > main_position_two)
+    else if (tracker_position_x < main_position_x && tracker_position_y > main_position_y)
     {
         if (random_pos_one == 0)
         {
@@ -271,7 +271,7 @@ void tracker()
         }
     }
     // Bottom Right
-    else if (tracker_position_x < main_position_one && tracker_position_y < main_position_two)
+    else if (tracker_position_x < main_position_x && tracker_position_y < main_position_y)
     {
         if (random_pos_one == 0)
         {
@@ -289,7 +289,7 @@ void tracker()
         }
     }
     // Right
-    else if (tracker_position_x == main_position_one && tracker_position_y < main_position_two)
+    else if (tracker_position_x == main_position_x && tracker_position_y < main_position_y)
     {
         if (break_shield("y", 1) == false)
         {
@@ -297,7 +297,7 @@ void tracker()
         }
     }
     // Left
-    else if (tracker_position_x == main_position_one && tracker_position_y > main_position_two)
+    else if (tracker_position_x == main_position_x && tracker_position_y > main_position_y)
     {
         if (break_shield("y", -1) == false)
         {
@@ -305,7 +305,7 @@ void tracker()
         }
     }
     // Down
-    else if (tracker_position_x < main_position_one && tracker_position_y == main_position_two)
+    else if (tracker_position_x < main_position_x && tracker_position_y == main_position_y)
     {
         if (break_shield("x", 1) == false)
         {
@@ -313,7 +313,7 @@ void tracker()
         }
     }
     // Up
-    else if (tracker_position_x > main_position_one && tracker_position_y == main_position_two)
+    else if (tracker_position_x > main_position_x && tracker_position_y == main_position_y)
     {
         if (break_shield("x", -1) == false)
         {
@@ -326,7 +326,7 @@ void tracker()
 int player_control(std::string& user_input)
 {
     // Remove main character from current position.
-    main_board[main_position_one][main_position_two] = " . ";
+    main_board[main_position_x][main_position_y] = " . ";
 
     int movement = 1;
 
@@ -335,7 +335,7 @@ int player_control(std::string& user_input)
         std::cout << "Direction: ";
         std::cin >> user_input;
         deploy_shield(user_input);
-        main_board[main_position_one][main_position_two] = "[@]";
+        main_board[main_position_x][main_position_y] = "[@]";
         return 0;
     }
 
@@ -348,53 +348,53 @@ int player_control(std::string& user_input)
     // Move left.
     if (user_input == "w")
     {
-        if (main_position_one - movement < 0)
+        if (main_position_x - movement < 0)
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board up by one.
-            main_position_one -= movement;
+            main_position_x -= movement;
         }
     }
     // Move down.
     else if (user_input == "s")
     {
-        if (main_position_one + movement >= (main_board.size()))
+        if (main_position_x + movement >= (main_board.size()))
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board down by one.
-            main_position_one += movement;
+            main_position_x += movement;
         }
     }
     // Move right.
     else if (user_input == "d")
     {
-        if (main_position_two + movement >= (main_board.size()))
+        if (main_position_y + movement >= (main_board.size()))
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board right by one.
-            main_position_two += movement;
+            main_position_y += movement;
         }
     }
     // Move up.
     else if (user_input == "a")
     {
-        if (main_position_two - movement < 0)
+        if (main_position_y - movement < 0)
         {
             std::cout << "[-] Beyond Boundary Error" << "\n";
         }
         else
         {
             // Move main character on board left by one.
-            main_position_two -= movement;
+            main_position_y -= movement;
         }
     }
     else if (user_input == "exit")
@@ -405,10 +405,10 @@ int player_control(std::string& user_input)
     else
     {
         std::cout << "[-] Invalid User Input;" << "\n";
-        main_board[main_position_one][main_position_two] = "[@]";
+        main_board[main_position_x][main_position_y] = "[@]";
         return 0;
     }
-    main_board[main_position_one][main_position_two] = "[@]";
+    main_board[main_position_x][main_position_y] = "[@]";
     return 0;
 }
 
@@ -546,10 +546,10 @@ int main()
             break;
         }
         tracker();
-        std::cout << "Main character: " << main_position_one << "|" << main_position_two 
+        std::cout << "Main character: " << main_position_x << "|" << main_position_y 
             << " Tracker: " << tracker_position_x << "|" << tracker_position_y << "\n";
         board_display();
-        if (main_position_one == tracker_position_x && main_position_two == tracker_position_y)
+        if (main_position_x == tracker_position_x && main_position_y == tracker_position_y)
         {
             std::cout << "[-] GAME OVER;" << "\n";
             break;
