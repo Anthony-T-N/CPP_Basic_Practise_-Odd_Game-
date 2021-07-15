@@ -6,10 +6,13 @@
 // std::vector == Dynamic array (Similar to C# lists)
 // 2D Vectory array.
 std::vector<std::vector<std::string>> main_board;
-// Current position of player. (Main Character / Current Player)
-int main_position_x, main_position_y;
+// Arithmetic operator on a 4-byte value and then casting the result to an 8-byte value warning. Fixed after converting int to double.
+// Current position of @. (Main Character / Current Player)
+double main_position_x, main_position_y;
 // Current position of T. (Tracker)
-int tracker_position_x, tracker_position_y;
+double tracker_position_x, tracker_position_y;
+// Current position of B. (Blob)
+double blob_position_x, blob_position_y;
 
 void board_display()
 {
@@ -74,6 +77,17 @@ void item_positioning(int size)
         tracker_position_y = rand() % (size);
     }
     main_board[tracker_position_x][tracker_position_y] = "[T]";
+    
+    blob_position_x = rand() % (size);
+    blob_position_y = rand() % (size);
+
+    while (blob_position_x == main_position_x && blob_position_y == main_position_y || blob_position_x == tracker_position_x && blob_position_y == tracker_position_y)
+    {
+        std::cout << "[-] Blob spawn conflict detected;" << "\n";
+        blob_position_x = rand() % (size);
+        blob_position_y = rand() % (size);
+    }
+    main_board[blob_position_x][blob_position_y] = "[B]";
 }
 
 void deploy_shield(std::string& user_input)
@@ -345,7 +359,7 @@ int player_control(std::string& user_input)
         std::cin >> user_input;
         movement = 5;
     }
-    // Move left.
+    // Move up.
     if (user_input == "w")
     {
         if (main_position_x - movement < 0)
@@ -384,7 +398,7 @@ int player_control(std::string& user_input)
             main_position_y += movement;
         }
     }
-    // Move up.
+    // Move left.
     else if (user_input == "a")
     {
         if (main_position_y - movement < 0)
@@ -410,6 +424,11 @@ int player_control(std::string& user_input)
     }
     main_board[main_position_x][main_position_y] = "[@]";
     return 0;
+}
+
+void blob()
+{
+
 }
 
 // =====================================================================================
@@ -501,8 +520,8 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    //soundtrack();
-    std::cout << "Welcome friend!" << "\n\n";
+    soundtrack();
+    std::cout << "> Welcome friend!" << "\n\n";
     std::cout << "> Instructions (y): ";
     std::string instructions;
     std::getline(std::cin, instructions);
