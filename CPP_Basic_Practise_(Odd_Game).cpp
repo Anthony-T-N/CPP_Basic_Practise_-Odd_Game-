@@ -428,7 +428,30 @@ int player_control(std::string& user_input)
 
 void blob()
 {
-
+    std::cout << "Blob moving" << "\n";
+    main_board[blob_position_x][blob_position_y] = " S ";
+    // Randomly move in any random direction by one.
+    int test = rand() % (4);
+    if (test == 0)
+    {
+        // Up
+        main_board[blob_position_x][blob_position_y - 1] = " S ";
+    }
+    else if (test == 1)
+    {
+        // Down
+        main_board[blob_position_x][blob_position_y + 1] = " S ";
+    }
+    else if (test == 2)
+    {
+        // Right
+        main_board[blob_position_x + 1][blob_position_y + 1] = " S ";
+    }
+    else if (test == 3)
+    {
+        // Left
+        main_board[blob_position_x - 1][blob_position_y + 1] = " S ";
+    }
 }
 
 // =====================================================================================
