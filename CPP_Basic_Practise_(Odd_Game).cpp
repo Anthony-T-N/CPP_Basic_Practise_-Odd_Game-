@@ -426,31 +426,38 @@ int player_control(std::string& user_input)
     return 0;
 }
 
+
+//TODO: Blob bound check.
 void blob()
 {
     std::cout << "Blob moving" << "\n";
     main_board[blob_position_x][blob_position_y] = " S ";
     // Randomly move in any random direction by one.
     int test = rand() % (4);
+    std::cout << "Blob: " << test << "\n";
     if (test == 0)
     {
         // Up
-        main_board[blob_position_x][blob_position_y - 1] = " S ";
+        blob_position_x -= 1;
+        main_board[blob_position_x][blob_position_y] = "[B]";
     }
     else if (test == 1)
     {
         // Down
-        main_board[blob_position_x][blob_position_y + 1] = " S ";
+        blob_position_x += 1;
+        main_board[blob_position_x][blob_position_y] = "[B]";
     }
     else if (test == 2)
     {
         // Right
-        main_board[blob_position_x + 1][blob_position_y + 1] = " S ";
+        blob_position_y += 1;
+        main_board[blob_position_x][blob_position_y] = "[B]";
     }
     else if (test == 3)
     {
         // Left
-        main_board[blob_position_x - 1][blob_position_y + 1] = " S ";
+        blob_position_y -= 1;
+        main_board[blob_position_x][blob_position_y] = "[B]";
     }
 }
 
@@ -514,6 +521,7 @@ void game_instructions()
 
 std::string user_input_validation()
 {
+    // TODO: Program crashes when handling "enter".
     std::cout << "> Please enter board size (int): ";
     std::string user_input;
     // https://stackoverflow.com/questions/27205251/stdcin-skips-white-spaces
@@ -587,9 +595,11 @@ int main()
         {
             break;
         }
-        tracker();
-        std::cout << "Main character: " << main_position_x << "|" << main_position_y 
-            << " Tracker: " << tracker_position_x << "|" << tracker_position_y << "\n";
+        //tracker();
+        blob();
+        std::cout << "Main character: " << main_position_x << "|" << main_position_y
+            << " Tracker: " << tracker_position_x << "|" << tracker_position_y
+            << " Blob: " << blob_position_x << "|" << blob_position_y << "\n";
         board_display();
         if (main_position_x == tracker_position_x && main_position_y == tracker_position_y)
         {
