@@ -430,35 +430,64 @@ int player_control(std::string& user_input)
 //TODO: Blob bound check.
 void blob()
 {
+    int movement = 1;
     std::cout << "Blob moving" << "\n";
     main_board[blob_position_x][blob_position_y] = " S ";
     // Randomly move in any random direction by one.
-    int test = rand() % (4);
-    std::cout << "Blob: " << test << "\n";
-    if (test == 0)
+    while (true)
     {
-        // Up
-        blob_position_x -= 1;
-        main_board[blob_position_x][blob_position_y] = "[B]";
+        int test = rand() % (4);
+        std::cout << "Blob: " << test << "\n";
+        if (test == 0)
+        {
+            if (blob_position_x - movement < 0)
+            {
+                std::cout << "[-] Beyond Boundary Error" << "\n";
+            }
+            else
+            {
+                blob_position_x -= movement;
+                break;
+            }
+        }
+        else if (test == 1)
+        {
+            if (blob_position_x + movement >= (main_board.size()))
+            {
+                std::cout << "[-] Beyond Boundary Error" << "\n";
+            }
+            else
+            {
+                blob_position_x += movement;
+                break;
+            }
+        }
+        else if (test == 2)
+        {
+            if (blob_position_y + movement >= (main_board.size()))
+            {
+                std::cout << "[-] Beyond Boundary Error" << "\n";
+            }
+            else
+            {
+                blob_position_y += movement;
+                break;
+            }
+        }
+        else if (test == 3)
+        {
+            if (blob_position_y - movement < 0)
+            {
+                std::cout << "[-] Beyond Boundary Error" << "\n";
+            }
+            else
+            {
+                blob_position_y -= movement;
+                break;
+            }
+        }
     }
-    else if (test == 1)
-    {
-        // Down
-        blob_position_x += 1;
-        main_board[blob_position_x][blob_position_y] = "[B]";
-    }
-    else if (test == 2)
-    {
-        // Right
-        blob_position_y += 1;
-        main_board[blob_position_x][blob_position_y] = "[B]";
-    }
-    else if (test == 3)
-    {
-        // Left
-        blob_position_y -= 1;
-        main_board[blob_position_x][blob_position_y] = "[B]";
-    }
+    main_board[blob_position_x][blob_position_y] = "[B]";
 }
 
 // =====================================================================================
@@ -551,7 +580,7 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
     // Never trust user input.
-    soundtrack();
+    //soundtrack();
     std::cout << "> Welcome friend!" << "\n\n";
     std::cout << "> Instructions (y): ";
     std::string instructions;
@@ -580,6 +609,7 @@ int main()
     std::cout << "\n\n";
     item_positioning(board_size);
     board_display();
+    double total_score = 0;
     while (true)
     {
         std::string user_input;
@@ -599,12 +629,17 @@ int main()
         blob();
         std::cout << "Main character: " << main_position_x << "|" << main_position_y
             << " Tracker: " << tracker_position_x << "|" << tracker_position_y
-            << " Blob: " << blob_position_x << "|" << blob_position_y << "\n";
+            << " Blob: " << blob_position_x << "|" << blob_position_y 
+            << " Score: " << total_score << "\n";
         board_display();
         if (main_position_x == tracker_position_x && main_position_y == tracker_position_y)
         {
             std::cout << "[-] GAME OVER;" << "\n";
             break;
+        }
+        else
+        {
+            total_score += 1;
         }
     }
     std::cout << "[!] END" << "\n";
