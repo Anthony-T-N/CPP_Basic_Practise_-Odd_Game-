@@ -436,9 +436,9 @@ void blob()
     // Randomly move in any random direction by one.
     while (true)
     {
-        int test = rand() % (4);
-        std::cout << "Blob: " << test << "\n";
-        if (test == 0)
+        int blob_random_direction = rand() % (4);
+        std::cout << "Blob: " << blob_random_direction << "\n";
+        if (blob_random_direction == 0)
         {
             if (blob_position_x - movement < 0)
             {
@@ -450,7 +450,7 @@ void blob()
                 break;
             }
         }
-        else if (test == 1)
+        else if (blob_random_direction == 1)
         {
             if (blob_position_x + movement >= (main_board.size()))
             {
@@ -462,7 +462,7 @@ void blob()
                 break;
             }
         }
-        else if (test == 2)
+        else if (blob_random_direction == 2)
         {
             if (blob_position_y + movement >= (main_board.size()))
             {
@@ -474,7 +474,7 @@ void blob()
                 break;
             }
         }
-        else if (test == 3)
+        else if (blob_random_direction == 3)
         {
             if (blob_position_y - movement < 0)
             {
@@ -532,6 +532,8 @@ void game_instructions()
     std::cout << "> Characters:" << "\n";
     std::cout << "[@] <= Your character" << "\n";
     std::cout << "[T] <= Tracker" << "\n\n";
+    std::cout << "[B] <= Blob" << "\n\n";
+    std::cin.get();
     std::cout << "> Enter 't' and then enter a direction to teleport." << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
@@ -627,10 +629,10 @@ int main()
         }
         //tracker();
         blob();
-        std::cout << "Main character: " << main_position_x << "|" << main_position_y
-            << " Tracker: " << tracker_position_x << "|" << tracker_position_y
-            << " Blob: " << blob_position_x << "|" << blob_position_y 
-            << " Score: " << total_score << "\n";
+        std::cout << "\033[31m" << "Main character: " << main_position_x << "|" << main_position_y << "\033[0m"
+            << "\033[36m" << " Tracker: " << tracker_position_x << "|" << tracker_position_y << "\033[0m"
+            << "\033[32m" << " Blob: " << blob_position_x << "|" << blob_position_y << "\033[0m"
+            << "\033[33m" << " Score: " << total_score << "\033[0m" << "\n";
         board_display();
         if (main_position_x == tracker_position_x && main_position_y == tracker_position_y)
         {
