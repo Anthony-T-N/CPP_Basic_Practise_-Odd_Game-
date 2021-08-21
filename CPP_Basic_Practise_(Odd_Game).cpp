@@ -14,6 +14,11 @@ double tracker_position_x, tracker_position_y;
 // Current position of B. (Blob)
 double blob_position_x, blob_position_y;
 
+// Characters
+std::string main_character = "\033[31m[@]\033[0m";
+std::string enemy_blob = "\033[32m[B]\033[0m";
+std::string enemy_tracker = "\033[36m[T]\033[0m";
+
 void board_display()
 {
     // Prints out board.
@@ -66,7 +71,7 @@ void item_positioning(int size)
     main_position_x = rand() % (size);
     main_position_y = rand() % (size);
     std::cout << main_position_x << "|" << main_position_y << "\n\n";
-    main_board[main_position_x][main_position_y] = "[@]";
+    main_board[main_position_x][main_position_y] = main_character;
     tracker_position_x = rand() % (size);
     tracker_position_y = rand() % (size);
     // Detect if tracker spawns at the same position of main character.
@@ -76,7 +81,7 @@ void item_positioning(int size)
         tracker_position_x = rand() % (size);
         tracker_position_y = rand() % (size);
     }
-    main_board[tracker_position_x][tracker_position_y] = "[T]";
+    main_board[tracker_position_x][tracker_position_y] = enemy_tracker;
     
     blob_position_x = rand() % (size);
     blob_position_y = rand() % (size);
@@ -87,7 +92,7 @@ void item_positioning(int size)
         blob_position_x = rand() % (size);
         blob_position_y = rand() % (size);
     }
-    main_board[blob_position_x][blob_position_y] = "[B]";
+    main_board[blob_position_x][blob_position_y] = enemy_blob;
 }
 
 void deploy_shield(std::string& user_input)
@@ -334,7 +339,7 @@ void tracker()
             tracker_position_x -= 1;
         }
     }
-    main_board[tracker_position_x][tracker_position_y] = "[T]";
+    main_board[tracker_position_x][tracker_position_y] = enemy_tracker;
 }
 
 int player_control(std::string& user_input)
@@ -349,7 +354,7 @@ int player_control(std::string& user_input)
         std::cout << "Direction: ";
         std::cin >> user_input;
         deploy_shield(user_input);
-        main_board[main_position_x][main_position_y] = "[@]";
+        main_board[main_position_x][main_position_y] = main_character;
         return 0;
     }
 
@@ -419,10 +424,10 @@ int player_control(std::string& user_input)
     else
     {
         std::cout << "[-] Invalid User Input;" << "\n";
-        main_board[main_position_x][main_position_y] = "[@]";
+        main_board[main_position_x][main_position_y] = main_character;
         return 0;
     }
-    main_board[main_position_x][main_position_y] = "[@]";
+    main_board[main_position_x][main_position_y] = main_character;
     return 0;
 }
 
@@ -432,7 +437,7 @@ void blob()
 {
     int movement = 1;
     std::cout << "Blob moving" << "\n";
-    main_board[blob_position_x][blob_position_y] = " S ";
+    main_board[blob_position_x][blob_position_y] = "\033[92m S \033[0m";
     // Randomly move in any random direction by one.
     while (true)
     {
@@ -487,7 +492,7 @@ void blob()
             }
         }
     }
-    main_board[blob_position_x][blob_position_y] = "[B]";
+    main_board[blob_position_x][blob_position_y] = enemy_blob;
 }
 
 // =====================================================================================
@@ -530,9 +535,9 @@ void game_instructions()
     std::cout << "'z' to deploy shield" << "\n";
     std::cout << "Type 'Exit' to end application" << "\n\n";
     std::cout << "> Characters:" << "\n";
-    std::cout << "[@] <= Your character" << "\n";
-    std::cout << "[T] <= Tracker" << "\n\n";
-    std::cout << "[B] <= Blob" << "\n\n";
+    std::cout << main_character << " <= Your character" << "\n";
+    std::cout << enemy_tracker << " <= Tracker" << "\n";
+    std::cout << enemy_blob << " <= Blob" << "\n\n";
     std::cin.get();
     std::cout << "> Enter 't' and then enter a direction to teleport." << "\n";
     std::cout << " . . . . . . . | . . . . . . . " << "\n";
@@ -627,7 +632,7 @@ int main()
         {
             break;
         }
-        //tracker();
+        tracker();
         blob();
         std::cout << "\033[31m" << "Main character: " << main_position_x << "|" << main_position_y << "\033[0m"
             << "\033[36m" << " Tracker: " << tracker_position_x << "|" << tracker_position_y << "\033[0m"
