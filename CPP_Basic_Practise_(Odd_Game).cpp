@@ -59,6 +59,8 @@ void board_generation(int &size)
 
 void item_positioning(int size)
 {
+    // Seed.
+    srand(time(NULL));
     // https://stackoverflow.com/questions/4919303/c-random-number-generation
     // Generate number between 0 and size.
     for (int i = 0; i <= 5; i++)
@@ -435,6 +437,8 @@ int player_control(std::string& user_input)
 //TODO: Blob bound check.
 void blob()
 {
+    // Seed.
+    srand(time(NULL));
     int movement = 1;
     std::cout << "Blob moving" << "\n";
     main_board[blob_position_x][blob_position_y] = "\033[92m S \033[0m";
@@ -639,7 +643,8 @@ int main()
             << "\033[32m" << " Blob: " << blob_position_x << "|" << blob_position_y << "\033[0m"
             << "\033[33m" << " Score: " << total_score << "\033[0m" << "\n";
         board_display();
-        if (main_position_x == tracker_position_x && main_position_y == tracker_position_y)
+        if (main_position_x == tracker_position_x && main_position_y == tracker_position_y
+            || main_position_x == blob_position_x && main_position_y == blob_position_y)
         {
             std::cout << "[-] GAME OVER;" << "\n";
             break;
